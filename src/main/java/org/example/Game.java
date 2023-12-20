@@ -1,15 +1,21 @@
 package org.example;
 
+import org.example.entity.Player;
+import org.example.manager.ImageManager;
 import org.example.manager.InputManager;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.Map;
 
 public class Game extends JPanel implements Runnable{
     boolean isRunning;
     Thread gameThread;
     InputManager inputManager;
-    int playerX,playerY = 0;
+    ImageManager imageManager;
+    Player player;
+    long lastTime;
     Game(){
         this.setPreferredSize(new Dimension(500,500));
         this.setBackground(Color.black);
@@ -21,15 +27,20 @@ public class Game extends JPanel implements Runnable{
         gameThread = new Thread(this);
         gameThread.start();
         inputManager = new InputManager();
+        imageManager = new ImageManager();
         this.addKeyListener(inputManager);
         this.setFocusable(true);
+        player = new Player(imageManager, 0, 0, inputManager, this);
+        if (player == null) {
+            System.out.println("NULL");
+        }
     }
 
     @Override
     public void run(){
         double drawInterval = 1000000000/60;
         double delta = 0;
-        long lastTime = System.nanoTime();
+        lastTime = System.nanoTime();
         long currentTime;
         while (gameThread != null){
 
@@ -47,23 +58,15 @@ public class Game extends JPanel implements Runnable{
     }
 
     private void update() {
-        for (Map.Entry<InputManager.direction, Boolean> entry : inputManager.getKeyStates().entrySet()) {
-            if (entry.getValue()){
-                switch (entry.getKey()) {
-                    case Up -> playerY-=10;
-                    case Down -> playerY+=10;
-                    case Left -> playerX-=10;
-                    case Right -> playerX+=10;
-                }
-            }
+        if (player != null) {
+            player.update();
         }
     }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D) g;
-        g2.setColor(Color.white);
-        g2.fillRect(playerX, playerY, 16,16);
-        g2.dispose();
+        player.draw(g, this, lastTime);
     }
+
+
 }
