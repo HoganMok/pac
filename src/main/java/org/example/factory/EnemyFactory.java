@@ -8,7 +8,7 @@ import org.example.manager.InputManager;
 import java.awt.*;
 import java.util.Map;
 
-public class EnemyFactory {
+public class EnemyFactory extends EntityFactory{
     public enum enemyType {
         red, pink, blue, orange
     }
