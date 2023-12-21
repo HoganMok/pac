@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.entity.Player;
+import org.example.factory.PlayerFactory;
 import org.example.manager.ImageManager;
 import org.example.manager.InputManager;
 import javax.swing.*;
@@ -14,6 +15,7 @@ public class Game extends JPanel implements Runnable{
     Thread gameThread;
     InputManager inputManager;
     ImageManager imageManager;
+    PlayerFactory playerFactory;
     Player player;
     long lastTime;
     Game(){
@@ -28,12 +30,10 @@ public class Game extends JPanel implements Runnable{
         gameThread.start();
         inputManager = new InputManager();
         imageManager = new ImageManager();
+        playerFactory = new PlayerFactory(PlayerFactory.PlayerType.yellow, imageManager, 0, 0,
+                inputManager, this);
         this.addKeyListener(inputManager);
         this.setFocusable(true);
-        player = new Player(imageManager, 0, 0, inputManager, this);
-        if (player == null) {
-            System.out.println("NULL");
-        }
     }
 
     @Override
@@ -72,13 +72,13 @@ public class Game extends JPanel implements Runnable{
     }
 
     private void update() {
-        if (player != null) {
-            player.update();
+        if (playerFactory != null) {
+            playerFactory.update();
         }
     }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        player.draw(g, this, lastTime);
+        playerFactory.draw(g, this);
     }
 }

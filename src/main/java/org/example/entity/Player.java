@@ -22,10 +22,6 @@ public class Player extends Entity {
         down,
         die
     }
-    public enum playerType {
-        yellow
-    }
-
     private AnimatedSprite animatedSprite;
     private InputManager inputManager;
     private ImageManager imageManager;
@@ -66,7 +62,7 @@ public class Player extends Entity {
     }
 
     @Override
-    public void draw(Graphics g, Game game, Long deltaTime){
+    public void draw(Graphics g, Game game){
         Graphics2D g2 = (Graphics2D) g;
         g2.drawImage(bufferedImages[iterator % bufferedImages.length],playerXCoordinate,playerYCoordinate, game);
         iterator++;
