@@ -38,21 +38,59 @@ public class Game extends JPanel implements Runnable{
 
     @Override
     public void run(){
-        double drawInterval = 1000000000/60;
-        double delta = 0;
-        lastTime = System.nanoTime();
-        long currentTime;
-        while (gameThread != null){
+//        double drawInterval = 1000000000/60;
+//        lastTime = System.nanoTime();
+//        long currentTime;
+//        while (gameThread != null){
+//
+//            currentTime = System.nanoTime();
+//            long delta = (currentTime - lastTime);
+//
+//            if (delta >= drawInterval) {
+//                update();
+//                repaint();
+//                lastTime = (long) (currentTime - (delta % drawInterval));
+//            }
+//
+//            long sleepTime = (long) (drawInterval - (System.currentTimeMillis()-currentTime));
+//            if (sleepTime > 0) {
+//                try{
+//                    Thread.sleep(sleepTime);
+//                } catch (InterruptedException e) {
+//                    Thread.currentThread().interrupt();
+//                }
+//            }
+//        }
 
-            currentTime = System.nanoTime();
-            delta += (currentTime - lastTime) / drawInterval;
 
-            lastTime = currentTime;
+        double timePerFrame = 1000000000/60;
+        double timePerUps = 1000000000/60;
 
-            if (delta >= 1) {
-                update();
+        long lastFrame = System.nanoTime();
+        long lastTimeUps = System.nanoTime();
+        long lastTImeCheck = System.currentTimeMillis();
+
+        int frams = 0;
+        int updates = 0;
+
+        while (true) {
+
+            if (System.nanoTime() - lastFrame >= timePerFrame) {
+                lastFrame = System.nanoTime();
                 repaint();
-                delta--;
+                frams++;
+            }
+
+            if (System.nanoTime() - lastTimeUps >= timePerUps) {
+                update();
+                lastTimeUps = System.nanoTime();
+                updates++;
+            }
+
+            if (System.currentTimeMillis() - lastTImeCheck >= 1000) {
+                frams = 0;
+                updates = 0;
+                lastTImeCheck = System.currentTimeMillis();
             }
         }
     }

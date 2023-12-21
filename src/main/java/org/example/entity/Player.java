@@ -21,6 +21,7 @@ public class Player extends Entity {
     private InputManager inputManager;
     private ImageManager imageManager;
     private BufferedImage[] bufferedImages;
+    private int iterator = 0;
     private Game game;
     private Thread delayThread;
     public Player(ImageManager imageManagers, int xCoordinate, int yCoordinate, InputManager inputManagers, Game games){
@@ -50,14 +51,9 @@ public class Player extends Entity {
 
     @Override
     public void draw(Graphics g, Game game, Long deltaTime){
-        for (int i = 0; i < 3; i++){
-            try {
-                Thread.sleep(5);
-            }catch (InterruptedException e){
-                Thread.currentThread().interrupt();
-            }
-            Graphics2D g2 = (Graphics2D) g;
-            g2.drawImage(bufferedImages[i],playerXCoordinate,playerYCoordinate, game);
-        }
+        Graphics2D g2 = (Graphics2D) g;
+        g2.drawImage(bufferedImages[iterator],playerXCoordinate,playerYCoordinate, game);
+        if (iterator == 2) {iterator = 0;}
+        else {iterator++;}
     }
 }
