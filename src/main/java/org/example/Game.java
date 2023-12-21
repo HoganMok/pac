@@ -38,30 +38,6 @@ public class Game extends JPanel implements Runnable{
 
     @Override
     public void run(){
-//        double drawInterval = 1000000000/60;
-//        lastTime = System.nanoTime();
-//        long currentTime;
-//        while (gameThread != null){
-//
-//            currentTime = System.nanoTime();
-//            long delta = (currentTime - lastTime);
-//
-//            if (delta >= drawInterval) {
-//                update();
-//                repaint();
-//                lastTime = (long) (currentTime - (delta % drawInterval));
-//            }
-//
-//            long sleepTime = (long) (drawInterval - (System.currentTimeMillis()-currentTime));
-//            if (sleepTime > 0) {
-//                try{
-//                    Thread.sleep(sleepTime);
-//                } catch (InterruptedException e) {
-//                    Thread.currentThread().interrupt();
-//                }
-//            }
-//        }
-
 
         double timePerFrame = 1000000000/60;
         double timePerUps = 1000000000/60;
@@ -105,6 +81,4 @@ public class Game extends JPanel implements Runnable{
         super.paintComponent(g);
         player.draw(g, this, lastTime);
     }
-
-
 }
