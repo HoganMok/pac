@@ -10,26 +10,21 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Player extends Entity {
     private int playerXCoordinate, playerYCoordinate;
     public enum movement {
-        idle,
-        left,
-        right,
-        up,
-        down,
-        die
+        idle, left, right, up, down, die
     }
     private AnimatedSprite animatedSprite;
     private InputManager inputManager;
     private ImageManager imageManager;
-    private BufferedImage[] bufferedImages;
+    private List<BufferedImage> bufferedImages;
     private Map<movement, BufferedImage[]>animation;
     private int iterator = 0;
     private Game game;
-    private Thread delayThread;
     public Player(ImageManager imageManagers, int xCoordinate, int yCoordinate, InputManager inputManagers, Game games){
         inputManager = inputManagers;
         imageManager = imageManagers;
@@ -62,9 +57,9 @@ public class Player extends Entity {
     }
 
     @Override
-    public void draw(Graphics g, Game game){
+    public void draw(Graphics g){
         Graphics2D g2 = (Graphics2D) g;
-        g2.drawImage(bufferedImages[iterator % bufferedImages.length],playerXCoordinate,playerYCoordinate, game);
+        g2.drawImage(bufferedImages.get(iterator % bufferedImages.size()),playerXCoordinate,playerYCoordinate, game);
         iterator++;
     }
 }

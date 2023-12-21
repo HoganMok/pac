@@ -25,7 +25,7 @@ public class PlayerFactory extends EntityFactory {
         player.update();
     }
 
-    public void draw (Graphics g, Game game){
-        player.draw(g, game);
+    public void draw (Graphics g){
+        player.draw(g);
     }
 }

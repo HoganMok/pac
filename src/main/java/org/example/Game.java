@@ -79,6 +79,6 @@ public class Game extends JPanel implements Runnable{
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        playerFactory.draw(g, this);
+        playerFactory.draw(g);
     }
 }

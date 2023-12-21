@@ -6,5 +6,5 @@ import java.awt.*;
 
 public abstract class Entity {
     abstract void update();
-    abstract void draw(Graphics g, Game game);
+    abstract void draw(Graphics g);
 }
