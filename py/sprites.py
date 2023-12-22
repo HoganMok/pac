@@ -1,4 +1,4 @@
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 import numpy as np
 import sys
 
@@ -136,10 +136,10 @@ def select_pink_enemy():
     bottom = top + 18
 
     cropping = global_image.crop((left, top, right, bottom))
-    red_enemy = Image.new("P", cropping.size)
-    red_enemy.putpalette(global_image.getpalette())
-    red_enemy.paste(cropping, (0, 0))
-    red_enemy.save("images/"+image_name)
+    pink_enemy = Image.new("P", cropping.size)
+    pink_enemy.putpalette(global_image.getpalette())
+    pink_enemy.paste(cropping, (0, 0))
+    pink_enemy.save("images/"+image_name)
 
 def select_blue_enemy():
     global global_image
@@ -150,10 +150,10 @@ def select_blue_enemy():
     bottom = top + 18
 
     cropping = global_image.crop((left, top, right, bottom))
-    red_enemy = Image.new("P", cropping.size)
-    red_enemy.putpalette(global_image.getpalette())
-    red_enemy.paste(cropping, (0, 0))
-    red_enemy.save("images/"+image_name)
+    blue_enemy = Image.new("P", cropping.size)
+    blue_enemy.putpalette(global_image.getpalette())
+    blue_enemy.paste(cropping, (0, 0))
+    blue_enemy.save("images/"+image_name)
 
 def select_yellow_enemy():
     global global_image
@@ -164,16 +164,125 @@ def select_yellow_enemy():
     bottom = top + 18
 
     cropping = global_image.crop((left, top, right, bottom))
-    red_enemy = Image.new("P", cropping.size)
-    red_enemy.putpalette(global_image.getpalette())
-    red_enemy.paste(cropping, (0, 0))
-    red_enemy.save("images/"+image_name)
+    yellow_enemy = Image.new("P", cropping.size)
+    yellow_enemy.putpalette(global_image.getpalette())
+    yellow_enemy.paste(cropping, (0, 0))
+    yellow_enemy.save("images/"+image_name)
 
-def select_tiles():
+def select_enemy_hunted():
+    global global_image
+    image_name = "enemy_hunted.png"
+    left = 99 + 290 - 1
+    top = 68
+    right = left + 52
+    bottom = top + 18
 
-    return
+    cropping = global_image.crop((left, top, right, bottom))
+    hunted_enemy = Image.new("P", cropping.size)
+    hunted_enemy.putpalette(global_image.getpalette())
+    hunted_enemy.paste(cropping, (0, 0))
+    hunted_enemy.save("images/"+image_name)
+
+def select_enemy_hunt_scores():
+    global global_image
+    image_name = "enemy_hunted_score.png"
+    left = 99 + 290 + 52 - 2
+    top = 68
+    right = left + 69
+    bottom = top + 18
+
+    cropping = global_image.crop((left, top, right, bottom))
+    hunted_enemy_score = Image.new("P", cropping.size)
+    hunted_enemy_score.putpalette(global_image.getpalette())
+    hunted_enemy_score.paste(cropping, (0, 0))
+    hunted_enemy_score.save("images/"+image_name)
+
+def select_enemy_eyes():
+    global global_image
+    image_name = "enemy_eyes.png"
+    left = 99 + 290 - 1
+    top = 68 + 18 - 1
+    right = left + 69
+    bottom = top + (18 - 1)*2 + 1
+
+    cropping = global_image.crop((left, top, right, bottom))
+    enemy_eyes = Image.new("P", cropping.size)
+    enemy_eyes.putpalette(global_image.getpalette())
+    enemy_eyes.paste(cropping, (0, 0))
+    enemy_eyes.save("images/"+image_name)
+
+def select_snacks():
+    global global_image
+    image_name = "snacks.png"
+    left = 151 - 1
+    top = 52 - 1
+    right = left + 273
+    bottom = top + 18
+
+    cropping = global_image.crop((left, top, right, bottom))
+    snacks = Image.new("P", cropping.size)
+    snacks.putpalette(global_image.getpalette())
+    snacks.paste(cropping, (0, 0))
+    snacks.save("images/"+image_name)
+
+def select_powerup():
+    global global_image
+    image_name = "powerup.png"
+    left = 150 + 18 - 1
+    top = 52 - 18
+    right = left + 18
+    bottom = top + 18
+
+    cropping = global_image.crop((left, top, right, bottom))
+    tile = create_empty_tile()
+    powerup = Image.new("RGB", (tile.width*2 - 1, tile.height))
+    powerup.paste(cropping, (0, 0))
+    powerup.paste(tile, (cropping.width-1, 0))
+    powerup.save("images/"+image_name)
+
+    print(powerup.getpixel((10, 10)))
+
+def create_coin():
+    image_name = "coin.png"
+    tile = create_empty_tile()
+
+    draw = ImageDraw.Draw(tile)
+    inner_square = (7, 7, 10, 10)
+    draw.rectangle(inner_square, fill=(255, 184, 174))
+
+    tile.save("images/"+image_name)
+
+def create_empty_tile():
+    global global_image
+    width, height = 18, 18
+    tile = Image.new("RGB", (width, height), COLOR_SEP)
+
+    draw = ImageDraw.Draw(tile)
+    inner_square = (1, 1, width - 2, height - 2)
+    draw.rectangle(inner_square, fill="black")
+
+    return tile
+
+def create_palette():
+    global global_image
+    global global_palette
+    size = len(global_palette)
+    palette = Image.new("RGB", (8*size, 16), color="white")
+
+    font = ImageFont.load_default(size=6)
+    draw = ImageDraw.Draw(palette)
+    left = 0
+    top = 0
+    bottom = 8
+    for index in range(size):
+        color = tuple(global_palette[index])
+        right = left + 8
+        color_rectangle = (left, top, right, bottom)
+        draw.rectangle(color_rectangle, fill=color)
+        draw.text((left+1, 10), str(index), fill="black", font=font)
+        left = right
     
-
+    palette.save("images/palette.png")
 
 def main():
     image_filepath = "images/" + sys.argv[1]
@@ -188,7 +297,15 @@ def main():
     # select_red_enemy()
     # select_pink_enemy()
     # select_blue_enemy()
-    select_yellow_enemy()
+    # select_yellow_enemy()
+    # select_enemy_hunted()
+    # select_enemy_hunt_scores()
+    # # select_enemy_eyes()
+    # select_snacks()
+    # select_powerup()
+    # create_palette()
+    create_coin()
+
 
 
 
