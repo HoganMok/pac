@@ -33,8 +33,8 @@ public class Enemy extends Entity{
         enemyXCoordinate = xCoordinate;
         enemyYCoordinate = yCoordinate;
 
-        animatedSprite = new AnimatedSprite(AnimatedSprite.spriteType.player, imageManager, 8,
-                "/Sprites/processed_image.png");
+        animatedSprite = new AnimatedSprite(imageManager, 8,
+                "/Sprites/processed_image.png",1,1);
 
         animation.put(movement.left,animatedSprite.getImagesSubList(0,2));
         animation.put(movement.right,animatedSprite.getImagesSubList(2,4));

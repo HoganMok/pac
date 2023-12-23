@@ -16,21 +16,23 @@ public class AnimatedSprite implements Sprite {
     private List<BufferedImage> imagesList;
     private BufferedImage image;
 
-    public AnimatedSprite(spriteType SpriteType, ImageManager imageManager, int imageNumbers, String filePath) {
+    public AnimatedSprite(ImageManager imageManager, int imageNumbers, String filePath,
+                          int xCoordinate, int yCoordinate) {
         //switch case for different spriteType
         imagesList = new ArrayList<>();
 //                BufferedImage[imageNumbers];
         image = imageManager.getImage(filePath);
-        setBufferedImageList(imageManager, filePath, imageNumbers);
+        setBufferedImageList(imageManager, filePath, imageNumbers, xCoordinate, yCoordinate);
     }
 
     @Override
     public void draw(Graphics g) {
     }
 
-    private void setBufferedImageList (ImageManager imageManager, String filePath, int imageNumbers){
+    private void setBufferedImageList (ImageManager imageManager, String filePath, int imageNumbers,
+                                       int xCoordinate, int yCoordinate){
         for (int i = 0; i < imageNumbers; i++) {
-            imagesList.add(imageManager.getSubImage(image, i+i*16, 0, 16, 16));
+            imagesList.add(imageManager.getSubImage(image, xCoordinate+i+i*16, yCoordinate, 16, 16));
             //imagesList[i] = imageManager.getSubImage(image, i+i*16, 0, 16, 16);
         }
     }
