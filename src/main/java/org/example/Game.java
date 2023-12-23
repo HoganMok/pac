@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.entity.Player;
+import org.example.factory.EnemyFactory;
 import org.example.factory.PlayerFactory;
 import org.example.manager.ImageManager;
 import org.example.manager.InputManager;
@@ -16,6 +17,7 @@ public class Game extends JPanel implements Runnable{
     InputManager inputManager;
     ImageManager imageManager;
     PlayerFactory playerFactory;
+    EnemyFactory enemyFactory;
     Player player;
     long lastTime;
     Game(){
@@ -32,6 +34,7 @@ public class Game extends JPanel implements Runnable{
         imageManager = new ImageManager();
         playerFactory = new PlayerFactory(PlayerFactory.PlayerType.yellow, imageManager, 0, 0,
                 inputManager, this);
+        enemyFactory = new EnemyFactory(imageManager, 0, 0, inputManager,this);
         this.addKeyListener(inputManager);
         this.setFocusable(true);
     }
@@ -75,10 +78,14 @@ public class Game extends JPanel implements Runnable{
         if (playerFactory != null) {
             playerFactory.update();
         }
+        if (enemyFactory != null) {
+            enemyFactory.update();
+        }
     }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         playerFactory.draw(g);
+        enemyFactory.draw(g);
     }
 }

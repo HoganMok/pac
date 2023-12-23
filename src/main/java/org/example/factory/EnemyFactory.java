@@ -6,31 +6,35 @@ import org.example.manager.ImageManager;
 import org.example.manager.InputManager;
 
 import java.awt.*;
+import java.util.HashMap;
 import java.util.Map;
 
 public class EnemyFactory {
-    public enum enemyType {
-        red, pink, blue, orange
+    public enum EnemyType {
+        red_enemy, pink_enemy, blue_enemy, yellow_enemy
     }
 
-    public Map<enemyType, Enemy> enemyMap;
+    public Map<EnemyType, Enemy> enemyMap;
 
-    public void EnemyFactory (ImageManager imageManagers, int xCoordinate, int yCoordinate, InputManager inputManagers, Game
+    public EnemyFactory (ImageManager imageManagers, int xCoordinate, int yCoordinate, InputManager inputManagers, Game
             games){
-        for (enemyType Enemy : enemyType.values()) {
-            Enemy enemies = new Enemy(imageManagers, xCoordinate, yCoordinate, inputManagers, games);
+        int i = 100;
+        enemyMap = new HashMap<>();
+        for (EnemyType Enemy : EnemyType.values()) {
+            Enemy enemies = new Enemy(Enemy,imageManagers, xCoordinate+i, yCoordinate+i, inputManagers, games);
             enemyMap.put(Enemy, enemies);
+            i+=50;
         }
     }
 
     public void update(){
-        for (Map.Entry<enemyType, Enemy> entry : enemyMap.entrySet()) {
+        for (Map.Entry<EnemyType, Enemy> entry : enemyMap.entrySet()) {
             entry.getValue().update();
         }
     }
 
     public void draw(Graphics g) {
-        for (Map.Entry<enemyType, Enemy> entry : enemyMap.entrySet()) {
+        for (Map.Entry<EnemyType, Enemy> entry : enemyMap.entrySet()) {
             entry.getValue().draw(g);
         }
     }
