@@ -23,7 +23,6 @@ public class Player extends Entity {
     private ImageManager imageManager;
     private Map<movement, List<BufferedImage>>animation;
     private movement movementState;
-    private int iterator = 0;
     private Game game;
     private int aniTick, aniIndex, aniSpeed = 10;
     public Player(ImageManager imageManagers, int xCoordinate, int yCoordinate, InputManager inputManagers, Game games){
@@ -93,6 +92,5 @@ public class Player extends Entity {
         Graphics2D g2 = (Graphics2D) g;
         updateTick();
         g2.drawImage(animation.get(movementState).get(aniIndex),playerXCoordinate,playerYCoordinate, game);
-        iterator++;
     }
 }

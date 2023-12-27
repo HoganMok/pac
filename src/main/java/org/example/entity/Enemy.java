@@ -25,7 +25,7 @@ public class Enemy extends Entity{
     private int enemyXCoordinate;
     private int enemyYCoordinate;
     private Game game;
-    private int iterator = 0;
+    private int aniTick, aniIndex, aniSpeed = 10;
     public Enemy(EnemyFactory.EnemyType enemyType,ImageManager imageManagers, int xCoordinate, int yCoordinate, InputManager inputManagers, Game games) {
         inputManager = inputManagers;
         imageManager = imageManagers;
@@ -53,11 +53,23 @@ public class Enemy extends Entity{
         /////////Update the movementStates after building the tracking algorithm!!!!!!!!!!!!!!!!!!!!!!!!!
     }
 
+    private void updateTick(){
+        aniTick++;
+        if (aniTick >= aniSpeed) {
+            aniTick = 0;
+            aniIndex++;
+            if (aniIndex >= animation.get(movementStates).size()) {
+                aniIndex = 0;
+            }
+        }
+    }
+
     @Override
     public void draw(Graphics g, Double deltaTime) {
         Graphics2D g2 = (Graphics2D) g;
         bufferedImages = animation.get(movementStates);
-        g2.drawImage(animation.get(movementStates).get(iterator % animation.get(movementStates).size()),enemyXCoordinate,enemyYCoordinate, game);        iterator++;
+        updateTick();
+        g2.drawImage(animation.get(movementStates).get(aniIndex),enemyXCoordinate,enemyYCoordinate, game);
     }
 
 }
