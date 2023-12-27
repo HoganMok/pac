@@ -25,6 +25,7 @@ public class Player extends Entity {
     private movement movementState;
     private int iterator = 0;
     private Game game;
+    private int aniTick, aniIndex, aniSpeed = 10;
     public Player(ImageManager imageManagers, int xCoordinate, int yCoordinate, InputManager inputManagers, Game games){
         inputManager = inputManagers;
         imageManager = imageManagers;
@@ -52,7 +53,8 @@ public class Player extends Entity {
     }
 
     @Override
-    public void update() {
+    public void update(Double deltaTime) {
+        super.update(deltaTime);
         for (Map.Entry<InputManager.direction, Boolean> entry : inputManager.getKeyStates().entrySet()) {
             if (entry.getValue()){
                 switch (entry.getKey()) {
@@ -76,11 +78,21 @@ public class Player extends Entity {
             }
         }
     }
-
+    private void updateTick(){
+        aniTick++;
+        if (aniTick >= aniSpeed) {
+            aniTick = 0;
+            aniIndex++;
+            if (aniIndex >= animation.get(movementState).size()) {
+                aniIndex = 0;
+            }
+        }
+    }
     @Override
-    public void draw(Graphics g){
+    public void draw(Graphics g, Double deltaTime){
         Graphics2D g2 = (Graphics2D) g;
-        g2.drawImage(animation.get(movementState).get(iterator % animation.get(movementState).size()),playerXCoordinate,playerYCoordinate, game);
+        updateTick();
+        g2.drawImage(animation.get(movementState).get(aniIndex),playerXCoordinate,playerYCoordinate, game);
         iterator++;
     }
 }

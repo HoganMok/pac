@@ -20,6 +20,7 @@ public class Game extends JPanel implements Runnable{
     EnemyFactory enemyFactory;
     Player player;
     long lastTime;
+    private double currentFPS, currentDeltaTime;
     Game(){
         this.setPreferredSize(new Dimension(500,500));
         this.setBackground(Color.black);
@@ -76,16 +77,16 @@ public class Game extends JPanel implements Runnable{
 
     private void update() {
         if (playerFactory != null) {
-            playerFactory.update();
+            playerFactory.update(currentDeltaTime);
         }
         if (enemyFactory != null) {
-            enemyFactory.update();
+            enemyFactory.update(currentDeltaTime);
         }
     }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        playerFactory.draw(g);
-        enemyFactory.draw(g);
+        playerFactory.draw(g,currentDeltaTime);
+        enemyFactory.draw(g, currentDeltaTime);
     }
 }

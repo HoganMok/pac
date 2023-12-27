@@ -27,15 +27,15 @@ public class EnemyFactory {
         }
     }
 
-    public void update(){
+    public void update(double deltaTime){
         for (Map.Entry<EnemyType, Enemy> entry : enemyMap.entrySet()) {
-            entry.getValue().update();
+            entry.getValue().update(deltaTime);
         }
     }
 
-    public void draw(Graphics g) {
+    public void draw(Graphics g, Double deltaTime) {
         for (Map.Entry<EnemyType, Enemy> entry : enemyMap.entrySet()) {
-            entry.getValue().draw(g);
+            entry.getValue().draw(g, deltaTime);
         }
     }
 }

@@ -21,11 +21,11 @@ public class PlayerFactory extends EntityFactory {
         }
     }
 
-    public void update (){
-        player.update();
+    public void update (Double deltaTime){
+        player.update(deltaTime);
     }
 
-    public void draw (Graphics g){
-        player.draw(g);
+    public void draw (Graphics g, Double deltaTime){
+        player.draw(g, deltaTime);
     }
 }
