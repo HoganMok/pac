@@ -308,7 +308,30 @@ def inline_lil_pac():
     
     inline.save("images/" + name)
     
-
+def inline_big_pac():
+    global global_image
+    name = "big_pac_inline.png"
+    width = global_image.width
+    height = global_image.height
+    left, top = 0, 0
+    right, bottom = 3*34-3, 34
+    rows = []
+    for i in range(4):
+        if (i == 3):
+            right+=1
+        row = global_image.crop((left, top, right, bottom))
+        rows.append(row)
+        top = bottom - 1
+        bottom = bottom + 33
+    
+    inline = Image.new("RGB", (4*width - 3, 34), "black")
+    left = 0
+    for i in range(4):
+        inline.paste(rows[i], (left, 0))
+        left = (i+1)*33*3
+        inline.show()
+    
+    inline.save("images/" + name)
 
 
 def main():
@@ -327,16 +350,13 @@ def main():
     # select_yellow_enemy()
     # select_enemy_hunted()
     # select_enemy_hunt_scores()
-    # # select_enemy_eyes()
+    # select_enemy_eyes()
     # select_snacks()
     # select_powerup()
     # create_palette()
     # create_coin()
-    inline_lil_pac()
-
-
-
-
+    # inline_lil_pac()
+    # inline_big_pac()
 
 
 if __name__=="__main__":
