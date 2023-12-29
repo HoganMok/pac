@@ -14,7 +14,7 @@ def set_palette():
     global global_palette
     global global_image
     palette = global_image.getpalette()
-    print(palette)
+    # print(palette)
     global_palette = np.array(palette).reshape(len(palette) // 3, 3)
 
 def get_pixel_color(xy):
@@ -284,6 +284,33 @@ def create_palette():
     
     palette.save("images/palette.png")
 
+def inline_lil_pac():
+    global global_image
+    name = "lil_pac_inline.png"
+    width = global_image.width
+    height = global_image.height
+    left, top = 0, 0
+    right, bottom = 3*18-3, 18
+    rows = []
+    for i in range(4):
+        if (i == 3):
+            right+=1
+        row = global_image.crop((left, top, right, bottom))
+        rows.append(row)
+        top = bottom - 1
+        bottom = bottom + 17
+    
+    inline = Image.new("RGB", (4*width - 3, 18), "black")
+    left = 0
+    for i in range(4):
+        inline.paste(rows[i], (left, 0))
+        left = (i+1)*17*3
+    
+    inline.save("images/" + name)
+    
+
+
+
 def main():
     image_filepath = "images/" + sys.argv[1]
     # select_gameboard(sprite_board)
@@ -304,7 +331,8 @@ def main():
     # select_snacks()
     # select_powerup()
     # create_palette()
-    create_coin()
+    # create_coin()
+    inline_lil_pac()
 
 
 
