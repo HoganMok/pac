@@ -333,6 +333,51 @@ def inline_big_pac():
     
     inline.save("images/" + name)
 
+def select_gameboards():
+    global global_image
+    name = "-gameboard.png"
+    width = global_image.width
+    height = global_image.height
+    flag = True
+
+    left, top = 0, 0
+    right, bottom = 224, 244
+    for i in range(8):
+        board = global_image.crop((left, top, right, bottom))
+        board.save("images/"+str(i)+name)
+        if ((i+1)//4 == 1 and flag):
+            left=-225
+            right=-1
+            top+=248+1
+            bottom+=248+1
+            flag = False
+        left+=224 + 1
+        right+=224 + 1
+
+def inline_enemy_eyes():
+    global global_image
+    name = "enemy_eyes_inline.png"
+    width = global_image.width
+    height = global_image.height
+    left, top = 0, 0
+    right, bottom = 4*18-4, 18
+    rows = []
+    for i in range(2):
+        if (i == 1):
+            right+=1
+        row = global_image.crop((left, top, right, bottom))
+        row.show()
+        rows.append(row)
+        top = bottom - 1
+        bottom = bottom + 17
+    
+    inline = Image.new("RGB", (2*width - 1, 18), "black")
+    left = 0
+    for i in range(2):
+        inline.paste(rows[i], (left, 0))
+        left = (i+1)*17*4
+    
+    inline.save("images/" + name)
 
 def main():
     image_filepath = "images/" + sys.argv[1]
@@ -357,6 +402,8 @@ def main():
     # create_coin()
     # inline_lil_pac()
     # inline_big_pac()
+    # select_gameboards()
+    inline_enemy_eyes()
 
 
 if __name__=="__main__":
