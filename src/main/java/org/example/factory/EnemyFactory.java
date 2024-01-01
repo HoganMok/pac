@@ -9,11 +9,11 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EnemyFactory {
+
+public class EnemyFactory extends EntityFactory{
     public enum EnemyType {
         red_enemy, pink_enemy, blue_enemy, yellow_enemy
     }
-
     public Map<EnemyType, Enemy> enemyMap;
 
     public EnemyFactory (ImageManager imageManagers, int xCoordinate, int yCoordinate, InputManager inputManagers, Game

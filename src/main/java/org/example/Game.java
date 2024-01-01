@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.entity.Player;
 import org.example.factory.EnemyFactory;
+import org.example.factory.BoostFactory;
 import org.example.factory.PlayerFactory;
 import org.example.manager.ImageManager;
 import org.example.manager.InputManager;
@@ -18,6 +19,7 @@ public class Game extends JPanel implements Runnable{
     ImageManager imageManager;
     PlayerFactory playerFactory;
     EnemyFactory enemyFactory;
+    BoostFactory boostFactory;
     Player player;
     long lastTime;
     private double currentFPS, currentDeltaTime;
@@ -36,6 +38,8 @@ public class Game extends JPanel implements Runnable{
         playerFactory = new PlayerFactory(PlayerFactory.PlayerType.yellow, imageManager, 0, 0,
                 inputManager, this);
         enemyFactory = new EnemyFactory(imageManager, 0, 0, inputManager,this);
+        boostFactory = new BoostFactory(imageManager, inputManager, this);
+        boostFactory.createBoost(BoostFactory.boostType.coin, 100, 100);
         this.addKeyListener(inputManager);
         this.setFocusable(true);
     }
@@ -82,11 +86,15 @@ public class Game extends JPanel implements Runnable{
         if (enemyFactory != null) {
             enemyFactory.update(currentDeltaTime);
         }
+        if (boostFactory != null) {
+            boostFactory.update(currentDeltaTime);
+        }
     }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         playerFactory.draw(g,currentDeltaTime);
         enemyFactory.draw(g, currentDeltaTime);
+        boostFactory.draw(g, currentDeltaTime);
     }
 }

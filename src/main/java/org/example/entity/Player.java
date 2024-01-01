@@ -52,8 +52,7 @@ public class Player extends Entity {
     }
 
     @Override
-    public void update(Double deltaTime) {
-        super.update(deltaTime);
+    public void update(double deltaTime) {
         for (Map.Entry<InputManager.direction, Boolean> entry : inputManager.getKeyStates().entrySet()) {
             if (entry.getValue()){
                 switch (entry.getKey()) {
@@ -88,7 +87,7 @@ public class Player extends Entity {
         }
     }
     @Override
-    public void draw(Graphics g, Double deltaTime){
+    public void draw(Graphics g, double deltaTime){
         Graphics2D g2 = (Graphics2D) g;
         updateTick();
         g2.drawImage(animation.get(movementState).get(aniIndex),playerXCoordinate,playerYCoordinate, game);

@@ -49,7 +49,7 @@ public class Enemy extends Entity{
     }
 
     @Override
-    public void update(Double deltaTime){
+    public void update(double deltaTime){
         /////////Update the movementStates after building the tracking algorithm!!!!!!!!!!!!!!!!!!!!!!!!!
     }
 
@@ -65,11 +65,10 @@ public class Enemy extends Entity{
     }
 
     @Override
-    public void draw(Graphics g, Double deltaTime) {
+    public void draw(Graphics g, double deltaTime) {
         Graphics2D g2 = (Graphics2D) g;
         bufferedImages = animation.get(movementStates);
         updateTick();
         g2.drawImage(animation.get(movementStates).get(aniIndex),enemyXCoordinate,enemyYCoordinate, game);
     }
-
 }
