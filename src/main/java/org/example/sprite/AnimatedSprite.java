@@ -10,7 +10,8 @@ import java.util.List;
 public class AnimatedSprite implements Sprite {
     public enum spriteType {
         player,
-        enemy
+        enemy,
+        boost
     }
 
     private List<BufferedImage> imagesList;

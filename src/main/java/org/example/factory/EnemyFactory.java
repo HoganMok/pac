@@ -15,7 +15,7 @@ public class EnemyFactory extends EntityFactory{
 
     public Map<enemyType, Enemy> enemyMap;
 
-    public void EnemyFactory (ImageManager imageManagers, int xCoordinate, int yCoordinate, InputManager inputManagers, Game
+    public EnemyFactory (ImageManager imageManagers, int xCoordinate, int yCoordinate, InputManager inputManagers, Game
             games){
         for (enemyType Enemy : enemyType.values()) {
             Enemy enemies = new Enemy(imageManagers, xCoordinate, yCoordinate, inputManagers, games);
