@@ -25,6 +25,7 @@ public class Player extends Entity {
     private movement movementState;
     private Game game;
     private int aniTick, aniIndex, aniSpeed = 10;
+    private int iterator = 0;
     public Player(ImageManager imageManagers, int xCoordinate, int yCoordinate, InputManager inputManagers, Game games){
         inputManager = inputManagers;
         imageManager = imageManagers;

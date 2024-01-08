@@ -71,4 +71,8 @@ public class Enemy extends Entity{
         updateTick();
         g2.drawImage(animation.get(movementStates).get(aniIndex),enemyXCoordinate,enemyYCoordinate, game);
     }
+
+    public int getAniIndex() { return aniIndex; }
+
+    public Map<movement, List<BufferedImage>> getAnimation() { return animation;}
 }

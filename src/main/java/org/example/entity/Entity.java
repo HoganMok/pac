@@ -10,5 +10,7 @@ public abstract class Entity {
     private double currentAnimationFramesPerSecond = 8.5;
     private double currentAnimationSecondsPerFrame = 1 / currentAnimationFramesPerSecond;
     public abstract void update(double deltaTime);
-    public abstract void draw(Graphics g, double deltaTime);
+    public void draw(Graphics g, double deltaTime) {
+        this.get
+    }
 }

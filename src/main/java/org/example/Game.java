@@ -23,6 +23,7 @@ public class Game extends JPanel implements Runnable{
     Player player;
     long lastTime;
     private double currentFPS, currentDeltaTime;
+    private int aniTick, aniSpeed = 10;
     Game(){
         this.setPreferredSize(new Dimension(500,500));
         this.setBackground(Color.black);
@@ -39,7 +40,8 @@ public class Game extends JPanel implements Runnable{
                 inputManager, this);
         enemyFactory = new EnemyFactory(imageManager, 0, 0, inputManager,this);
         boostFactory = new BoostFactory(imageManager, inputManager, this);
-        boostFactory.createBoost(BoostFactory.boostType.coin, 100, 100);
+        boostFactory.createBoost(BoostFactory.boostType.egg, 100, 100);
+        isRunning = true;
         this.addKeyListener(inputManager);
         this.setFocusable(true);
     }
@@ -61,7 +63,9 @@ public class Game extends JPanel implements Runnable{
 
             if (System.nanoTime() - lastFrame >= timePerFrame) {
                 lastFrame = System.nanoTime();
-                repaint();
+                //System.out.println("Enter");
+                updateTick();
+                //repaint();
                 frams++;
             }
 
@@ -96,5 +100,13 @@ public class Game extends JPanel implements Runnable{
         playerFactory.draw(g,currentDeltaTime);
         enemyFactory.draw(g, currentDeltaTime);
         boostFactory.draw(g, currentDeltaTime);
+    }
+    private void updateTick(){
+        aniTick++;
+        if (aniTick >= aniSpeed) {
+            System.out.println("Enter");
+            aniTick = 0;
+            repaint();
+        }
     }
 }

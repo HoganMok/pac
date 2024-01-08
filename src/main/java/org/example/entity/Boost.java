@@ -50,8 +50,8 @@ public class Boost extends Entity{
             case powerup -> 1;
             default -> 16;
         };
-        animatedSprite = new AnimatedSprite( imageManager, 1,
-                "/Sprites/"+boostType+".png", boostXCoordinate, boostYCoordinate);
+        animatedSprite = new AnimatedSprite( imageManager, 10,
+                "/Sprites/"+boostType+".png", 1, 1);
 
 
         BufferedImage bufferedImage = switch (BoostTypes) {
@@ -95,7 +95,8 @@ public class Boost extends Entity{
     public void draw(Graphics g, double deltaTime) {
         Graphics2D g2 = (Graphics2D) g;
         bufferedImages = animation.get(movementStates);
-        updateTick();
-        g2.drawImage(animation.get(movementStates).get(aniIndex),boostXCoordinate,boostYCoordinate, game);
+        //updateTick();
+        g2.drawImage(animation.get(movementStates).get(iterator%animation.get(movementStates).size()),boostXCoordinate,boostYCoordinate, game);
+        iterator++;
     }
 }
