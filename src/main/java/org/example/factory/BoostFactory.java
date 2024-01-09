@@ -33,13 +33,13 @@ public class BoostFactory extends EntityFactory{
         boostMap.put(BoostType, boost);
     }
 
-
+    @Override
     public void update(double deltaTime){
         for (Map.Entry<BoostFactory.boostType, Boost> entry : boostMap.entrySet()) {
             entry.getValue().update(deltaTime);
         }
     }
-
+    @Override
     public void draw(Graphics g, double deltaTime) {
         for (Map.Entry<BoostFactory.boostType, Boost> entry : boostMap.entrySet()) {
             entry.getValue().draw(g, deltaTime);

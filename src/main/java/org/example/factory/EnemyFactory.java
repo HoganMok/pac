@@ -26,14 +26,14 @@ public class EnemyFactory extends EntityFactory{
             i+=50;
         }
     }
-
+    @Override
     public void update(double deltaTime){
         for (Map.Entry<EnemyType, Enemy> entry : enemyMap.entrySet()) {
             entry.getValue().update(deltaTime);
         }
     }
-
-    public void draw(Graphics g, Double deltaTime) {
+    @Override
+    public void draw(Graphics g, double deltaTime) {
         for (Map.Entry<EnemyType, Enemy> entry : enemyMap.entrySet()) {
             entry.getValue().draw(g, deltaTime);
         }
