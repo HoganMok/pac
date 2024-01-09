@@ -22,6 +22,7 @@ public class Player extends Entity {
     private InputManager inputManager;
     private ImageManager imageManager;
     private Map<movement, List<BufferedImage>>animation;
+    private AnimatedSprite animatedSprite;
     private movement movementState;
     private Game game;
     private int ANI_TICK = 10;
@@ -37,16 +38,15 @@ public class Player extends Entity {
 
         animation = new HashMap<>();
 
-        animation.put(movement.idle,(new AnimatedSprite( imageManager, 1,
-                "/Sprites/lil_pac.png", 1,1)).getImagesList());
-        animation.put(movement.left,(new AnimatedSprite( imageManager, 3,
-                "/Sprites/lil_pac.png", 1,1)).getImagesList());
-        animation.put(movement.up,(new AnimatedSprite( imageManager, 3,
-                "/Sprites/lil_pac.png", 1,18)).getImagesList());
-        animation.put(movement.right,(new AnimatedSprite( imageManager, 3,
-                "/Sprites/lil_pac.png", 1,35)).getImagesList());
-        animation.put(movement.down,(new AnimatedSprite( imageManager, 3,
-                "/Sprites/lil_pac.png", 1,52)).getImagesList());
+        animatedSprite = new AnimatedSprite(imageManager, 12, "/Sprites/lil_pac.png",
+                1, 1);
+
+        animation.put(movement.idle, animatedSprite.getImagesSubList(0,1));
+        animation.put(movement.left, animatedSprite.getImagesSubList(0,3));
+        animation.put(movement.up, animatedSprite.getImagesSubList(3,6));
+        animation.put(movement.right, animatedSprite.getImagesSubList(6,9));
+        animation.put(movement.down, animatedSprite.getImagesSubList(9,12));
+
         animation.put(movement.dead,(new AnimatedSprite( imageManager, 11,
                 "/Sprites/dead_pac.png", 1,1)).getImagesList());
         movementState=movement.idle;
