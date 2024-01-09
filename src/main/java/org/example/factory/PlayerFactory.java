@@ -13,10 +13,10 @@ public class PlayerFactory extends EntityFactory {
     }
 
     public Player player;
-    public PlayerFactory (PlayerType playerType, ImageManager imageManagers, int xCoordinate, int yCoordinate,
+    public PlayerFactory (PlayerType playerType, ImageManager imageManagers, int playerXCoordinate, int playerYCoordinate,
                           InputManager inputManagers, Game games) {
         switch (playerType) {
-            case yellow -> player = new Player(imageManagers, xCoordinate, yCoordinate, inputManagers,
+            case yellow -> player = new Player(imageManagers, playerXCoordinate, playerYCoordinate, inputManagers,
                     games);
         }
     }

@@ -18,41 +18,34 @@ public class Boost extends Entity{
         idle
     }
     private AnimatedSprite animatedSprite;
-    private InputManager inputManager;
     private ImageManager imageManager;
-    private java.util.List<BufferedImage> bufferedImages;
+    private List<BufferedImage> bufferedImages;
     private Map<Boost.movement, List<BufferedImage>> animation;
     private movement movementStates;
-    private int boostXCoordinate;
-    private int boostYCoordinate;
+    private int BOOST_X_COORDINATE;
+    private int BOOST_Y_COORDINATE;
     private Game game;
-    private int iterator = 0;
-    private int aniTick, aniIndex, aniSpeed = 10;
-    private String boostType;
-    public Boost(BoostFactory.boostType BoostTypes, ImageManager imageManagers, int xCoordinate, int yCoordinate, InputManager inputManagers, Game
+    private int ANI_TICK = 10;
+    private int ANI_INDEX = 0;
+    private final static int ANI_SPEED = 10;
+    public Boost(BoostFactory.boostType BoostTypes, ImageManager imageManagers, int xCoordinate, int yCoordinate, Game
             games){
-        inputManagers = inputManagers;
         bufferedImages = new ArrayList<>();
         imageManager = imageManagers;
-        boostXCoordinate = xCoordinate;
-        boostYCoordinate = yCoordinate;
+        BOOST_X_COORDINATE = xCoordinate;
+        BOOST_Y_COORDINATE = yCoordinate;
         game = games;
         animation = new HashMap<>();
-        int number;
         movementStates = movement.idle;
-        boostType = switch (BoostTypes) {
-            case coin -> "coin";
-            case powerup -> "powerup";
-            default -> "snacks";
-        };
-        number = switch (BoostTypes) {
-            case coin -> 1;
-            case powerup -> 1;
-            default -> 16;
-        };
-        animatedSprite = new AnimatedSprite( imageManager, 10,
-                "/Sprites/"+boostType+".png", 1, 1);
 
+        animatedSprite = switch (BoostTypes) {
+            case coin -> new AnimatedSprite( imageManager, 1,
+                    "/Sprites/"+BoostTypes+".png", 1, 1);
+            case powerup ->  new AnimatedSprite( imageManager, 2,
+                    "/Sprites/"+BoostTypes+".png", 1, 1);
+            default -> new AnimatedSprite( imageManager, 16,
+                    "/Sprites/snacks.png", 1, 1);
+        };
 
         BufferedImage bufferedImage = switch (BoostTypes) {
             case coin, powerup, apple -> animatedSprite.getImagesList().get(0);
@@ -81,12 +74,12 @@ public class Boost extends Entity{
 
 
     private void updateTick(){
-        aniTick++;
-        if (aniTick >= aniSpeed) {
-            aniTick = 0;
-            aniIndex++;
-            if (aniIndex >= animation.get(movementStates).size()) {
-                aniIndex = 0;
+        ANI_TICK++;
+        if (ANI_TICK >= ANI_SPEED) {
+            ANI_TICK = 0;
+            ANI_INDEX++;
+            if (ANI_INDEX >= animation.get(movementStates).size()) {
+                ANI_INDEX = 0;
             }
         }
     }
@@ -94,9 +87,7 @@ public class Boost extends Entity{
     @Override
     public void draw(Graphics g, double deltaTime) {
         Graphics2D g2 = (Graphics2D) g;
-        bufferedImages = animation.get(movementStates);
-        //updateTick();
-        g2.drawImage(animation.get(movementStates).get(iterator%animation.get(movementStates).size()),boostXCoordinate,boostYCoordinate, game);
-        iterator++;
+        updateTick();
+        g2.drawImage(animation.get(movementStates).get(ANI_INDEX), BOOST_X_COORDINATE,BOOST_Y_COORDINATE, game);
     }
 }

@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Player extends Entity {
-    private int playerXCoordinate, playerYCoordinate;
+    private int PLAYER_X_COORDINATE, PLAYER_Y_COORDINATE;
     public enum movement {
         idle, left, right, up, down, dead
     }
@@ -24,16 +24,16 @@ public class Player extends Entity {
     private Map<movement, List<BufferedImage>>animation;
     private movement movementState;
     private Game game;
-    private int aniTick, aniIndex, aniSpeed = 10;
-    private int iterator = 0;
+    private int ANI_TICK = 10;
+    private int ANI_INDEX = 0;
+    private final static int ANI_SPEED = 10;
     public Player(ImageManager imageManagers, int xCoordinate, int yCoordinate, InputManager inputManagers, Game games){
         inputManager = inputManagers;
         imageManager = imageManagers;
         game = games;
 
-        playerXCoordinate = xCoordinate;
-        playerYCoordinate = yCoordinate;
-
+        PLAYER_X_COORDINATE = xCoordinate;
+        PLAYER_Y_COORDINATE = yCoordinate;
 
         animation = new HashMap<>();
 
@@ -58,19 +58,19 @@ public class Player extends Entity {
             if (entry.getValue()){
                 switch (entry.getKey()) {
                     case Up -> {
-                        playerYCoordinate-=10;
+                        PLAYER_Y_COORDINATE-=10;
                         movementState = movement.up;
                     }
                     case Down -> {
-                        playerYCoordinate+=10;
+                        PLAYER_Y_COORDINATE+=10;
                         movementState = movement.down;
                     }
                     case Left -> {
-                        playerXCoordinate-=10;
+                        PLAYER_X_COORDINATE-=10;
                         movementState = movement.left;
                     }
                     case Right -> {
-                        playerXCoordinate+=10;
+                        PLAYER_X_COORDINATE+=10;
                         movementState = movement.right;
                     }
                 }
@@ -78,12 +78,12 @@ public class Player extends Entity {
         }
     }
     private void updateTick(){
-        aniTick++;
-        if (aniTick >= aniSpeed) {
-            aniTick = 0;
-            aniIndex++;
-            if (aniIndex >= animation.get(movementState).size()) {
-                aniIndex = 0;
+        ANI_TICK++;
+        if (ANI_TICK >= ANI_SPEED) {
+            ANI_TICK = 0;
+            ANI_INDEX++;
+            if (ANI_INDEX >= animation.get(movementState).size()) {
+                ANI_INDEX = 0;
             }
         }
     }
@@ -91,6 +91,6 @@ public class Player extends Entity {
     public void draw(Graphics g, double deltaTime){
         Graphics2D g2 = (Graphics2D) g;
         updateTick();
-        g2.drawImage(animation.get(movementState).get(aniIndex),playerXCoordinate,playerYCoordinate, game);
+        g2.drawImage(animation.get(movementState).get(ANI_INDEX),PLAYER_X_COORDINATE,PLAYER_Y_COORDINATE, game);
     }
 }

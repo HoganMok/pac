@@ -19,24 +19,25 @@ public class Enemy extends Entity{
     private AnimatedSprite animatedSprite;
     private InputManager inputManager;
     private ImageManager imageManager;
-    private List<BufferedImage> bufferedImages;
     private Map<movement, List<BufferedImage>> animation;
     private movement movementStates;
-    private int enemyXCoordinate;
-    private int enemyYCoordinate;
+    private int ENEMY_X_COORDINATE;
+    private int ENEMY_Y_COORDINATE;
     private Game game;
-    private int aniTick, aniIndex, aniSpeed = 10;
+    private int ANI_TICK = 10;
+    private int ANI_INDEX = 0;
+    private final static int ANI_SPEED = 10;
     public Enemy(EnemyFactory.EnemyType enemyType,ImageManager imageManagers, int xCoordinate, int yCoordinate, InputManager inputManagers, Game games) {
         inputManager = inputManagers;
         imageManager = imageManagers;
         game = games;
         animation = new HashMap<>();
-        enemyXCoordinate = xCoordinate;
-        enemyYCoordinate = yCoordinate;
+        ENEMY_X_COORDINATE = xCoordinate;
+        ENEMY_Y_COORDINATE = yCoordinate;
 
         animatedSprite = new AnimatedSprite(imageManager, 8,
                 "/Sprites/"+enemyType+".png",1,1);
-        movementStates = movement.dead;
+        movementStates = movement.left;
         animation.put(movement.left,animatedSprite.getImagesSubList(0,2));
         animation.put(movement.right,animatedSprite.getImagesSubList(2,4));
         animation.put(movement.up,animatedSprite.getImagesSubList(4,6));
@@ -54,25 +55,19 @@ public class Enemy extends Entity{
     }
 
     private void updateTick(){
-        aniTick++;
-        if (aniTick >= aniSpeed) {
-            aniTick = 0;
-            aniIndex++;
-            if (aniIndex >= animation.get(movementStates).size()) {
-                aniIndex = 0;
+        ANI_TICK++;
+        if (ANI_TICK >= ANI_SPEED) {
+            ANI_TICK = 0;
+            ANI_INDEX++;
+            if (ANI_INDEX >= animation.get(movementStates).size()) {
+                ANI_INDEX = 0;
             }
         }
     }
-
     @Override
     public void draw(Graphics g, double deltaTime) {
         Graphics2D g2 = (Graphics2D) g;
-        bufferedImages = animation.get(movementStates);
         updateTick();
-        g2.drawImage(animation.get(movementStates).get(aniIndex),enemyXCoordinate,enemyYCoordinate, game);
+        g2.drawImage(animation.get(movementStates).get(ANI_INDEX),ENEMY_X_COORDINATE,ENEMY_Y_COORDINATE, game);
     }
-
-    public int getAniIndex() { return aniIndex; }
-
-    public Map<movement, List<BufferedImage>> getAnimation() { return animation;}
 }

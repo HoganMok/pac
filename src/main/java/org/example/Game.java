@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.entity.Enemy;
 import org.example.entity.Entity;
 import org.example.entity.Player;
 import org.example.factory.EnemyFactory;
@@ -21,12 +22,10 @@ public class Game extends JPanel implements Runnable{
     private Thread gameThread;
     private InputManager inputManager;
     private ImageManager imageManager;
-    private PlayerFactory playerFactory;
-    private EnemyFactory enemyFactory;
+    private Map<EntityFactory.factoryType, EntityFactory<?>> entityFactoryMap;
     private BoostFactory boostFactory;
-    private ArrayList<EntityFactory<?>> entityFactoryList;
     private Player player;
-    private double currentDeltaTime;
+    private double CURRENT_DELTA_TIME;
     Game(){
         this.setPreferredSize(new Dimension(500,500));
         this.setBackground(Color.black);
@@ -44,12 +43,14 @@ public class Game extends JPanel implements Runnable{
         gameThread.start();
         inputManager = new InputManager();
         imageManager = new ImageManager();
-        entityFactoryList = new ArrayList<>();
-        entityFactoryList.add(boostFactory = new BoostFactory(imageManager, inputManager, this));
-        boostFactory.createBoost(BoostFactory.boostType.egg, 150, 250);
-        entityFactoryList.add(enemyFactory = new EnemyFactory(imageManager, 0, 0, inputManager,this));
-        entityFactoryList.add(playerFactory = new PlayerFactory(PlayerFactory.PlayerType.yellow, imageManager, 0, 0,
-                inputManager, this));
+        entityFactoryMap = new HashMap<>();
+        entityFactoryMap.put(EntityFactory.factoryType.boostFactory, new BoostFactory(imageManager, this));
+        entityFactoryMap.put(EntityFactory.factoryType.enemyFactory, new EnemyFactory(imageManager, 0,
+                0, inputManager,this));
+        entityFactoryMap.put(EntityFactory.factoryType.playerFactory, new PlayerFactory(PlayerFactory.PlayerType.yellow,
+                imageManager, 0, 0, inputManager, this));
+        boostFactory = (BoostFactory) entityFactoryMap.get(EntityFactory.factoryType.boostFactory);
+        boostFactory.createBoost(BoostFactory.boostType.egg, 200, 250);
     }
     @Override
     public void run(){
@@ -77,17 +78,17 @@ public class Game extends JPanel implements Runnable{
         }
     }
     private void update() {
-        for (EntityFactory<?> entityFactory : entityFactoryList) {
-            if (entityFactory != null) {
-                entityFactory.update(currentDeltaTime);
+        for (Map.Entry<EntityFactory.factoryType, EntityFactory<?>> entry : entityFactoryMap.entrySet()) {
+            if (entry != null) {
+                entry.getValue().update(CURRENT_DELTA_TIME);
             }
         }
         ///////Remember to set a stop condition!!!!!
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        for (EntityFactory<?> entityFactory : entityFactoryList) {
-            entityFactory.draw(g,currentDeltaTime);
+        for (Map.Entry<EntityFactory.factoryType, EntityFactory<?>> entry : entityFactoryMap.entrySet()) {
+            entry.getValue().draw(g, CURRENT_DELTA_TIME);
         }
     }
 }

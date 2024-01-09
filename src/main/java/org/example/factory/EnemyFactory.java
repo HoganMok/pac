@@ -14,15 +14,16 @@ public class EnemyFactory extends EntityFactory{
     public enum EnemyType {
         red_enemy, pink_enemy, blue_enemy, yellow_enemy
     }
-    public Map<EnemyType, Enemy> enemyMap;
+    private Map<EnemyType, Enemy> enemyMap;
 
-    public EnemyFactory (ImageManager imageManagers, int xCoordinate, int yCoordinate, InputManager inputManagers, Game
-            games){
+    public EnemyFactory (ImageManager imageManagers, int enemyXCoordinate, int enemyYCoordinate,
+                         InputManager inputManagers, Game games){
         int i = 100;
         enemyMap = new HashMap<>();
-        for (EnemyType Enemy : EnemyType.values()) {
-            Enemy enemies = new Enemy(Enemy,imageManagers, xCoordinate+i, yCoordinate+i, inputManagers, games);
-            enemyMap.put(Enemy, enemies);
+        for (EnemyType enemyType : EnemyType.values()) {
+            Enemy enemy = new Enemy(enemyType,imageManagers, enemyXCoordinate+i, enemyYCoordinate+i,
+                    inputManagers, games);
+            enemyMap.put(enemyType, enemy);
             i+=50;
         }
     }

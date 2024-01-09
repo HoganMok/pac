@@ -21,15 +21,14 @@ public class BoostFactory extends EntityFactory{
     private Game game;
     public Map<boostType, Boost> boostMap;
 
-    public BoostFactory (ImageManager imageManagers, InputManager inputManagers, Game games){
+    public BoostFactory (ImageManager imageManagers, Game games){
         boostMap = new HashMap<>();
         imageManager = imageManagers;
-        inputManager = inputManagers;
          game = games;
     }
 
     public void createBoost(boostType BoostType, int xCoordinate, int yCoordinate){
-        Boost boost = new Boost(BoostType, imageManager, xCoordinate, yCoordinate, inputManager, game);
+        Boost boost = new Boost(BoostType, imageManager, xCoordinate, yCoordinate, game);
         boostMap.put(BoostType, boost);
     }
 
