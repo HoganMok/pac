@@ -24,11 +24,9 @@ public class Game extends JPanel implements Runnable{
     private PlayerFactory playerFactory;
     private EnemyFactory enemyFactory;
     private BoostFactory boostFactory;
-    private Map<EntityFactory<?>, Boolean> entityFactory;
+    private ArrayList<EntityFactory<?>> entityFactoryList;
     private Player player;
-    private long lastTime;
-    private double currentFPS, currentDeltaTime;
-    private int aniTick, aniSpeed = 10;
+    private double currentDeltaTime;
     Game(){
         this.setPreferredSize(new Dimension(500,500));
         this.setBackground(Color.black);
@@ -46,12 +44,12 @@ public class Game extends JPanel implements Runnable{
         gameThread.start();
         inputManager = new InputManager();
         imageManager = new ImageManager();
-        entityFactory = new HashMap<>();
-        entityFactory.put(playerFactory = new PlayerFactory(PlayerFactory.PlayerType.yellow, imageManager, 0, 0,
-                inputManager, this), true);
-        entityFactory.put(enemyFactory = new EnemyFactory(imageManager, 0, 0, inputManager,this), true);
-        entityFactory.put(boostFactory = new BoostFactory(imageManager, inputManager, this), true);
-        boostFactory.createBoost(BoostFactory.boostType.egg, 100, 100);
+        entityFactoryList = new ArrayList<>();
+        entityFactoryList.add(boostFactory = new BoostFactory(imageManager, inputManager, this));
+        boostFactory.createBoost(BoostFactory.boostType.egg, 150, 250);
+        entityFactoryList.add(enemyFactory = new EnemyFactory(imageManager, 0, 0, inputManager,this));
+        entityFactoryList.add(playerFactory = new PlayerFactory(PlayerFactory.PlayerType.yellow, imageManager, 0, 0,
+                inputManager, this));
     }
     @Override
     public void run(){
@@ -79,24 +77,17 @@ public class Game extends JPanel implements Runnable{
         }
     }
     private void update() {
-        for (Map.Entry<EntityFactory<?>, Boolean> entry : entityFactory.entrySet()){
-            if (entry.getKey() != null) {
-                entry.getKey().update(currentDeltaTime);
+        for (EntityFactory<?> entityFactory : entityFactoryList) {
+            if (entityFactory != null) {
+                entityFactory.update(currentDeltaTime);
             }
         }
-        /*
-        remember to set a stop condition
-        if (inputManager.getKeyStates().get(InputManager.direction.End) != null && inputManager.getKeyStates().get(InputManager.direction.End)) {
-            isRunning = false;
-        }
-         */
+        ///////Remember to set a stop condition!!!!!
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        for (Map.Entry<EntityFactory<?>, Boolean> entry : entityFactory.entrySet()){
-            if (entry.getKey() != null) {
-                entry.getKey().draw(g, currentDeltaTime);
-            }
+        for (EntityFactory<?> entityFactory : entityFactoryList) {
+            entityFactory.draw(g,currentDeltaTime);
         }
     }
 }
