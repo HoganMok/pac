@@ -379,6 +379,48 @@ def inline_enemy_eyes():
     
     inline.save("images/" + name)
 
+def flashing_enemy():
+    global global_image
+    global global_palette
+    name = "flashing_enemy.png"
+    width = global_image.width
+    height = global_image.height
+    left, top, right, bottom = 0, 0, 1, 1
+    border = global_palette[global_image.getpixel((0, 0))]
+    black = global_palette[global_image.getpixel((1, 1))]
+    white = global_palette[31]
+    red = global_palette[38]
+    body = None
+    eye = None
+
+    # for index, color in enumerate(global_palette):
+    #     print(color)
+    #     if ((np.all(color == white, axis=0))):
+    #         print(index)
+    body_flag = False
+
+    for y in range(height):
+        for x in range(width):
+            pixel_color = global_palette[global_image.getpixel((x, y))]
+            is_not_border = ~(np.all(pixel_color == border))
+            is_not_black = ~(np.all(pixel_color == black))
+
+            if (is_not_border and is_not_black and ~body_flag):
+                body_flag = True
+                body = pixel_color
+            
+            if (body_flag):
+                is_pupil = np.all(pixel_color == global_palette[41])
+                is_body = np.all(pixel_color == body)
+                if (is_pupil):
+                    global_image.putpixel((x, y), tuple(red))     
+                elif (is_body):
+                    global_image.putpixel((x, y), tuple(white))
+                
+    global_image.save("images/" + name)
+                
+
+
 def main():
     image_filepath = "images/" + sys.argv[1]
     # select_gameboard(sprite_board)
@@ -403,7 +445,8 @@ def main():
     # inline_lil_pac()
     # inline_big_pac()
     # select_gameboards()
-    inline_enemy_eyes()
+    # inline_enemy_eyes()
+    # flashing_enemy()
 
 
 if __name__=="__main__":
