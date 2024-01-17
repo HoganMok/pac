@@ -88,7 +88,7 @@ public class Game extends JPanel implements Runnable{
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         for (Map.Entry<EntityFactory.factoryType, EntityFactory<?>> entry : entityFactoryMap.entrySet()) {
-            entry.getValue().draw(g, CURRENT_DELTA_TIME);
+            entry.getValue().draw(g, CURRENT_DELTA_TIME, 2);
         }
     }
 }

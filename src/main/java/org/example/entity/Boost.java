@@ -85,9 +85,12 @@ public class Boost extends Entity{
     }
 
     @Override
-    public void draw(Graphics g, double deltaTime) {
+    public void draw(Graphics g, double deltaTime, int assetScale) {
         Graphics2D g2 = (Graphics2D) g;
         updateTick();
-        g2.drawImage(animation.get(movementStates).get(ANI_INDEX), BOOST_X_COORDINATE,BOOST_Y_COORDINATE, game);
+        g2.drawImage(animation.get(movementStates).get(ANI_INDEX),
+                BOOST_X_COORDINATE,BOOST_Y_COORDINATE,
+                animation.get(movementStates).get(ANI_INDEX).getWidth()*assetScale,
+                animation.get(movementStates).get(ANI_INDEX).getHeight()*assetScale,game);
     }
 }

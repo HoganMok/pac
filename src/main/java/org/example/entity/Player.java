@@ -88,9 +88,11 @@ public class Player extends Entity {
         }
     }
     @Override
-    public void draw(Graphics g, double deltaTime){
+    public void draw(Graphics g, double deltaTime, int assetScale){
         Graphics2D g2 = (Graphics2D) g;
         updateTick();
-        g2.drawImage(animation.get(movementState).get(ANI_INDEX),PLAYER_X_COORDINATE,PLAYER_Y_COORDINATE, game);
+        g2.drawImage(animation.get(movementState).get(ANI_INDEX),PLAYER_X_COORDINATE,PLAYER_Y_COORDINATE,
+                animation.get(movementState).get(ANI_INDEX).getWidth()*assetScale,
+                animation.get(movementState).get(ANI_INDEX).getHeight()*assetScale, game);
     }
 }

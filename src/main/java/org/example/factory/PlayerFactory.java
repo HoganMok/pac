@@ -25,7 +25,7 @@ public class PlayerFactory extends EntityFactory {
         player.update(deltaTime);
     }
 
-    public void draw (Graphics g, double deltaTime){
-        player.draw(g, deltaTime);
+    public void draw (Graphics g, double deltaTime, int assetScale){
+        player.draw(g, deltaTime, assetScale);
     }
 }

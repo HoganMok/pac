@@ -39,9 +39,9 @@ public class BoostFactory extends EntityFactory{
         }
     }
     @Override
-    public void draw(Graphics g, double deltaTime) {
+    public void draw(Graphics g, double deltaTime, int assetScale) {
         for (Map.Entry<BoostFactory.boostType, Boost> entry : boostMap.entrySet()) {
-            entry.getValue().draw(g, deltaTime);
+            entry.getValue().draw(g, deltaTime, assetScale);
         }
     }
 }

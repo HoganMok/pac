@@ -11,5 +11,5 @@ public abstract class EntityFactory<T extends Enum<T>> {
     }
     public abstract void update(double deltaTime);
 
-    public abstract void draw(Graphics g, double deltaTime);
+    public abstract void draw(Graphics g, double deltaTime, int assetScale);
 }
