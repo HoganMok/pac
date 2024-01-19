@@ -9,6 +9,8 @@ import org.example.factory.EntityFactory;
 import org.example.factory.PlayerFactory;
 import org.example.manager.ImageManager;
 import org.example.manager.InputManager;
+import org.example.manager.MapManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -22,6 +24,7 @@ public class Game extends JPanel implements Runnable{
     private Thread gameThread;
     private InputManager inputManager;
     private ImageManager imageManager;
+    private MapManager mapManager;
     private Map<EntityFactory.factoryType, EntityFactory<?>> entityFactoryMap;
     private BoostFactory boostFactory;
     private Player player;
@@ -48,9 +51,10 @@ public class Game extends JPanel implements Runnable{
         entityFactoryMap.put(EntityFactory.factoryType.enemyFactory, new EnemyFactory(imageManager, 0,
                 0, inputManager,this));
         entityFactoryMap.put(EntityFactory.factoryType.playerFactory, new PlayerFactory(PlayerFactory.PlayerType.yellow,
-                imageManager, 0, 0, inputManager, this));
+                imageManager, 12, 12, inputManager, this));
         boostFactory = (BoostFactory) entityFactoryMap.get(EntityFactory.factoryType.boostFactory);
         boostFactory.createBoost(BoostFactory.boostType.egg, 200, 250);
+        mapManager = new MapManager(imageManager, "/gameboards/0-gameboard.png", this);
     }
     @Override
     public void run(){
@@ -87,8 +91,12 @@ public class Game extends JPanel implements Runnable{
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        for (Map.Entry<EntityFactory.factoryType, EntityFactory<?>> entry : entityFactoryMap.entrySet()) {
-            entry.getValue().draw(g, CURRENT_DELTA_TIME, 2);
+        if (mapManager != null) {
+            mapManager.draw(g, 3);
         }
+        for (Map.Entry<EntityFactory.factoryType, EntityFactory<?>> entry : entityFactoryMap.entrySet()) {
+            entry.getValue().draw(g, CURRENT_DELTA_TIME, 3);
+        }
+
     }
 }
