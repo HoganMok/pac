@@ -4,6 +4,7 @@ import org.example.Game;
 import org.example.manager.ImageManager;
 import org.example.manager.InputManager;
 import org.example.sprite.AnimatedSprite;
+import org.example.HitBox;
 
 import java.awt.*;
 import java.awt.event.KeyListener;
@@ -28,6 +29,7 @@ public class Player extends Entity {
     private int ANI_TICK = 10;
     private int ANI_INDEX = 0;
     private final static int ANI_SPEED = 10;
+    private HitBox hitBox;
     public Player(ImageManager imageManagers, int xCoordinate, int yCoordinate, InputManager inputManagers, Game games){
         inputManager = inputManagers;
         imageManager = imageManagers;
@@ -50,6 +52,7 @@ public class Player extends Entity {
         animation.put(movement.dead,(new AnimatedSprite( imageManager, 11,
                 "/Sprites/dead_pac.png", 1,1)).getImagesList());
         movementState=movement.idle;
+        hitBox = new HitBox(xCoordinate,yCoordinate,16*3,16*3);
     }
 
     @Override
@@ -74,6 +77,7 @@ public class Player extends Entity {
                         movementState = movement.right;
                     }
                 }
+                hitBox.updateHixBox(PLAYER_X_COORDINATE, PLAYER_Y_COORDINATE);
             }
         }
     }
@@ -94,5 +98,6 @@ public class Player extends Entity {
         g2.drawImage(animation.get(movementState).get(ANI_INDEX),PLAYER_X_COORDINATE,PLAYER_Y_COORDINATE,
                 animation.get(movementState).get(ANI_INDEX).getWidth()*assetScale,
                 animation.get(movementState).get(ANI_INDEX).getHeight()*assetScale, game);
+        hitBox.drawHitBox(g);
     }
 }

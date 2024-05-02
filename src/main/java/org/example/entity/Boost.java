@@ -1,6 +1,7 @@
 package org.example.entity;
 
 import org.example.Game;
+import org.example.HitBox;
 import org.example.factory.BoostFactory;
 import org.example.manager.ImageManager;
 import org.example.manager.InputManager;
@@ -28,6 +29,7 @@ public class Boost extends Entity{
     private int ANI_TICK = 10;
     private int ANI_INDEX = 0;
     private final static int ANI_SPEED = 10;
+    public HitBox hitBox;
     public Boost(BoostFactory.boostType BoostTypes, ImageManager imageManagers, int xCoordinate, int yCoordinate, Game
             games){
         bufferedImages = new ArrayList<>();

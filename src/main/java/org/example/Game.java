@@ -1,7 +1,5 @@
 package org.example;
 
-import org.example.entity.Enemy;
-import org.example.entity.Entity;
 import org.example.entity.Player;
 import org.example.factory.EnemyFactory;
 import org.example.factory.BoostFactory;
@@ -9,13 +7,12 @@ import org.example.factory.EntityFactory;
 import org.example.factory.PlayerFactory;
 import org.example.manager.ImageManager;
 import org.example.manager.InputManager;
+import org.example.manager.JsonManager;
 import org.example.manager.MapManager;
+import org.json.JSONObject;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 

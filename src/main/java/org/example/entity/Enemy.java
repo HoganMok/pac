@@ -1,6 +1,7 @@
 package org.example.entity;
 
 import org.example.Game;
+import org.example.HitBox;
 import org.example.factory.EnemyFactory;
 import org.example.manager.ImageManager;
 import org.example.manager.InputManager;
@@ -27,6 +28,7 @@ public class Enemy extends Entity{
     private int ANI_TICK = 10;
     private int ANI_INDEX = 0;
     private final static int ANI_SPEED = 10;
+    private HitBox hitBox;
     public Enemy(EnemyFactory.EnemyType enemyType,ImageManager imageManagers, int xCoordinate, int yCoordinate, InputManager inputManagers, Game games) {
         inputManager = inputManagers;
         imageManager = imageManagers;
@@ -46,7 +48,7 @@ public class Enemy extends Entity{
                 "/Sprites/enemy_eyes.png",1,1).getImagesList());
         animation.put(movement.hunted,new AnimatedSprite(imageManager, 3,
                 "/Sprites/enemy_hunted.png",1,1).getImagesList());
-
+        hitBox = new HitBox(xCoordinate,yCoordinate,16*3,16*3);
     }
 
     @Override
@@ -73,5 +75,6 @@ public class Enemy extends Entity{
                 animation.get(movementStates).get(ANI_INDEX).getWidth()*assetScale,
                 animation.get(movementStates).get(ANI_INDEX).getHeight()*assetScale,
                 game);
+        hitBox.drawHitBox(g);
     }
 }
