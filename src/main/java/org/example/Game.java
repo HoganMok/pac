@@ -26,6 +26,7 @@ public class Game extends JPanel implements Runnable{
     private BoostFactory boostFactory;
     private Player player;
     private double CURRENT_DELTA_TIME;
+    private HitBox hitBox;
     Game(){
         this.setPreferredSize(new Dimension(500,500));
         this.setBackground(Color.black);
@@ -44,13 +45,13 @@ public class Game extends JPanel implements Runnable{
         inputManager = new InputManager();
         imageManager = new ImageManager();
         entityFactoryMap = new HashMap<>();
-        entityFactoryMap.put(EntityFactory.factoryType.boostFactory, new BoostFactory(imageManager, this));
-        entityFactoryMap.put(EntityFactory.factoryType.enemyFactory, new EnemyFactory(imageManager, 0,
-                0, inputManager,this));
+//        entityFactoryMap.put(EntityFactory.factoryType.boostFactory, new BoostFactory(imageManager, this));
+//        entityFactoryMap.put(EntityFactory.factoryType.enemyFactory, new EnemyFactory(imageManager, 0,
+//                0, inputManager,this));
         entityFactoryMap.put(EntityFactory.factoryType.playerFactory, new PlayerFactory(PlayerFactory.PlayerType.yellow,
                 imageManager, 12, 12, inputManager, this));
-        boostFactory = (BoostFactory) entityFactoryMap.get(EntityFactory.factoryType.boostFactory);
-        boostFactory.createBoost(BoostFactory.boostType.egg, 200, 250);
+//        boostFactory = (BoostFactory) entityFactoryMap.get(EntityFactory.factoryType.boostFactory);
+//        boostFactory.createBoost(BoostFactory.boostType.egg, 200, 250);
         mapManager = new MapManager(imageManager, "/gameboards/0-gameboard.png", this);
     }
     @Override
@@ -94,6 +95,5 @@ public class Game extends JPanel implements Runnable{
         for (Map.Entry<EntityFactory.factoryType, EntityFactory<?>> entry : entityFactoryMap.entrySet()) {
             entry.getValue().draw(g, CURRENT_DELTA_TIME, 3);
         }
-
     }
 }

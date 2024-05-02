@@ -52,7 +52,7 @@ public class Player extends Entity {
         animation.put(movement.dead,(new AnimatedSprite( imageManager, 11,
                 "/Sprites/dead_pac.png", 1,1)).getImagesList());
         movementState=movement.idle;
-        hitBox = new HitBox(xCoordinate,yCoordinate,16*3,16*3);
+        hitBox = new HitBox(xCoordinate+6,yCoordinate+6,15*3,15*3);
     }
 
     @Override

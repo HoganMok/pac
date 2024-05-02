@@ -2,6 +2,7 @@ package org.example;
 
 import java.awt.*;
 
+
 public class HitBox {
     protected Rectangle hitbox;
     public HitBox(float x, float y, int width, int height){

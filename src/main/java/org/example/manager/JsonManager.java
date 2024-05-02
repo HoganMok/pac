@@ -26,7 +26,7 @@ public class JsonManager {
 //        // Assume your JSON object looks like this: {"name":"John", "age":30}
 //    }
     public JSONObject getJsonObject(String jsonStr) {
-        return new JSONObject(jsonStr);
+        return new JSONObject("/config/game.json");
         // Assume your JSON object looks like this: {"name":"John", "age":30}
     }
 }
