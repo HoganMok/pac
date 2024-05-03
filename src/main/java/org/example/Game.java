@@ -1,7 +1,5 @@
 package org.example;
 
-import org.example.entity.Enemy;
-import org.example.entity.Entity;
 import org.example.entity.Player;
 import org.example.factory.EnemyFactory;
 import org.example.factory.BoostFactory;
@@ -9,11 +7,12 @@ import org.example.factory.EntityFactory;
 import org.example.factory.PlayerFactory;
 import org.example.manager.ImageManager;
 import org.example.manager.InputManager;
+import org.example.manager.JsonManager;
+import org.example.manager.MapManager;
+import org.json.JSONObject;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,10 +21,12 @@ public class Game extends JPanel implements Runnable{
     private Thread gameThread;
     private InputManager inputManager;
     private ImageManager imageManager;
+    private MapManager mapManager;
     private Map<EntityFactory.factoryType, EntityFactory<?>> entityFactoryMap;
     private BoostFactory boostFactory;
     private Player player;
     private double CURRENT_DELTA_TIME;
+    private HitBox hitBox;
     Game(){
         this.setPreferredSize(new Dimension(500,500));
         this.setBackground(Color.black);
@@ -44,13 +45,14 @@ public class Game extends JPanel implements Runnable{
         inputManager = new InputManager();
         imageManager = new ImageManager();
         entityFactoryMap = new HashMap<>();
-        entityFactoryMap.put(EntityFactory.factoryType.boostFactory, new BoostFactory(imageManager, this));
-        entityFactoryMap.put(EntityFactory.factoryType.enemyFactory, new EnemyFactory(imageManager, 0,
-                0, inputManager,this));
+//        entityFactoryMap.put(EntityFactory.factoryType.boostFactory, new BoostFactory(imageManager, this));
+//        entityFactoryMap.put(EntityFactory.factoryType.enemyFactory, new EnemyFactory(imageManager, 0,
+//                0, inputManager,this));
         entityFactoryMap.put(EntityFactory.factoryType.playerFactory, new PlayerFactory(PlayerFactory.PlayerType.yellow,
-                imageManager, 0, 0, inputManager, this));
-        boostFactory = (BoostFactory) entityFactoryMap.get(EntityFactory.factoryType.boostFactory);
-        boostFactory.createBoost(BoostFactory.boostType.egg, 200, 250);
+                imageManager, 12, 12, inputManager, this));
+//        boostFactory = (BoostFactory) entityFactoryMap.get(EntityFactory.factoryType.boostFactory);
+//        boostFactory.createBoost(BoostFactory.boostType.egg, 200, 250);
+        mapManager = new MapManager(imageManager, "/gameboards/0-gameboard.png", this);
     }
     @Override
     public void run(){
@@ -87,8 +89,11 @@ public class Game extends JPanel implements Runnable{
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
+        if (mapManager != null) {
+            mapManager.draw(g, 3);
+        }
         for (Map.Entry<EntityFactory.factoryType, EntityFactory<?>> entry : entityFactoryMap.entrySet()) {
-            entry.getValue().draw(g, CURRENT_DELTA_TIME, 2);
+            entry.getValue().draw(g, CURRENT_DELTA_TIME, 3);
         }
     }
 }
