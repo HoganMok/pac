@@ -74,22 +74,44 @@ public class Player extends Entity {
             }
         }
         if (!collisionDetection.isCollided(boardHitBoxList, playerHitBox)) {
-            switch (movementState) {
-                case up -> {
-                    PLAYER_Y_COORDINATE -= 5;
-                }
-                case down -> {
-                    PLAYER_Y_COORDINATE += 5;
-                }
-                case left -> {
-                    PLAYER_X_COORDINATE -= 5;
-                }
-                case right -> {
-                    PLAYER_X_COORDINATE += 5;
+            if (!movementPrediction()) {
+                switch (movementState) {
+                    case up -> {
+                        PLAYER_Y_COORDINATE -= 5;
+                    }
+                    case down -> {
+                        PLAYER_Y_COORDINATE += 5;
+                    }
+                    case left -> {
+                        PLAYER_X_COORDINATE -= 5;
+                    }
+                    case right -> {
+                        PLAYER_X_COORDINATE += 5;
+                    }
                 }
             }
         }
         playerHitBox.updateHixBox(PLAYER_X_COORDINATE, PLAYER_Y_COORDINATE);
+    }
+    private boolean movementPrediction() {
+        int x = PLAYER_X_COORDINATE;
+        int y = PLAYER_Y_COORDINATE;
+        switch (movementState) {
+            case up -> {
+                y -= 5;
+            }
+            case down -> {
+                y += 5;
+            }
+            case left -> {
+                x -= 5;
+            }
+            case right -> {
+                x += 5;
+            }
+        }
+        HitBox predictedHitBox = new HitBox(x,y,(int)(16*3),(int)(16*3));
+        return collisionDetection.isCollided(boardHitBoxList, predictedHitBox);
     }
     private void updateTick(){
         ANI_TICK++;
