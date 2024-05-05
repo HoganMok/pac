@@ -9,6 +9,7 @@ public class InputManager implements KeyListener{
         Left, Right, Up, Down, End
     }
     private final Map<direction, Boolean> keyStates;
+    private boolean isPressed;
     public InputManager(){
        keyStates = new HashMap<>();
     }
@@ -18,17 +19,19 @@ public class InputManager implements KeyListener{
 
     @Override
     public void keyPressed(KeyEvent e) {
+        isPressed = true;
         direction Direction = getDirection(e);
         keyStates.put(Direction, true);
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
+        isPressed = false;
         direction Direction = getDirection(e);
         keyStates.put(Direction, false);
     }
 
-    public direction getDirection(KeyEvent e){
+    private direction getDirection(KeyEvent e){
         return switch (e.getKeyCode()) {
             case KeyEvent.VK_W, KeyEvent.VK_UP -> direction.Up;
             case KeyEvent.VK_A, KeyEvent.VK_LEFT -> direction.Left;
@@ -38,6 +41,6 @@ public class InputManager implements KeyListener{
             default -> null;
         };
     }
-
     public Map<direction, Boolean> getKeyStates() {return keyStates;}
+    public boolean getIsPressed(){return isPressed;}
 }

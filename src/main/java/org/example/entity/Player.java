@@ -1,5 +1,6 @@
 package org.example.entity;
 
+import org.example.CollisionDetection;
 import org.example.Game;
 import org.example.manager.ImageManager;
 import org.example.manager.InputManager;
@@ -7,9 +8,7 @@ import org.example.sprite.AnimatedSprite;
 import org.example.HitBox;
 
 import java.awt.*;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,11 +28,18 @@ public class Player extends Entity {
     private int ANI_TICK = 10;
     private int ANI_INDEX = 0;
     private final static int ANI_SPEED = 10;
-    private HitBox hitBox;
-    public Player(ImageManager imageManagers, int xCoordinate, int yCoordinate, InputManager inputManagers, Game games){
+    private HitBox playerHitBox;
+    private List<HitBox> boardHitBoxList;
+    private List<HitBox> playerhitBoxList;
+    CollisionDetection collisionDetection;
+    public Player(ImageManager imageManagers, int xCoordinate, int yCoordinate, InputManager inputManagers, Game games,
+                  CollisionDetection gameCollisionDetection, List<HitBox> gameBoardHitBoxList){
         inputManager = inputManagers;
         imageManager = imageManagers;
         game = games;
+        collisionDetection = gameCollisionDetection;
+        boardHitBoxList = gameBoardHitBoxList;
+        playerhitBoxList = new ArrayList<>();
 
         PLAYER_X_COORDINATE = xCoordinate;
         PLAYER_Y_COORDINATE = yCoordinate;
@@ -52,7 +58,7 @@ public class Player extends Entity {
         animation.put(movement.dead,(new AnimatedSprite( imageManager, 11,
                 "/Sprites/dead_pac.png", 1,1)).getImagesList());
         movementState=movement.idle;
-        hitBox = new HitBox(xCoordinate+6,yCoordinate+6,15*3,15*3);
+        playerHitBox = new HitBox(xCoordinate+6,yCoordinate+6,(int)(16*3),(int)(16*3));
     }
 
     @Override
@@ -60,26 +66,30 @@ public class Player extends Entity {
         for (Map.Entry<InputManager.direction, Boolean> entry : inputManager.getKeyStates().entrySet()) {
             if (entry.getValue()){
                 switch (entry.getKey()) {
-                    case Up -> {
-                        PLAYER_Y_COORDINATE-=10;
-                        movementState = movement.up;
-                    }
-                    case Down -> {
-                        PLAYER_Y_COORDINATE+=10;
-                        movementState = movement.down;
-                    }
-                    case Left -> {
-                        PLAYER_X_COORDINATE-=10;
-                        movementState = movement.left;
-                    }
-                    case Right -> {
-                        PLAYER_X_COORDINATE+=10;
-                        movementState = movement.right;
-                    }
+                    case Up -> {movementState = movement.up;}
+                    case Down -> {movementState = movement.down;}
+                    case Left -> {movementState = movement.left;}
+                    case Right -> {movementState = movement.right;}
                 }
-                hitBox.updateHixBox(PLAYER_X_COORDINATE, PLAYER_Y_COORDINATE);
             }
         }
+        if (!collisionDetection.isCollided(boardHitBoxList, playerHitBox)) {
+            switch (movementState) {
+                case up -> {
+                    PLAYER_Y_COORDINATE -= 5;
+                }
+                case down -> {
+                    PLAYER_Y_COORDINATE += 5;
+                }
+                case left -> {
+                    PLAYER_X_COORDINATE -= 5;
+                }
+                case right -> {
+                    PLAYER_X_COORDINATE += 5;
+                }
+            }
+        }
+        playerHitBox.updateHixBox(PLAYER_X_COORDINATE, PLAYER_Y_COORDINATE);
     }
     private void updateTick(){
         ANI_TICK++;
@@ -98,6 +108,6 @@ public class Player extends Entity {
         g2.drawImage(animation.get(movementState).get(ANI_INDEX),PLAYER_X_COORDINATE,PLAYER_Y_COORDINATE,
                 animation.get(movementState).get(ANI_INDEX).getWidth()*assetScale,
                 animation.get(movementState).get(ANI_INDEX).getHeight()*assetScale, game);
-        hitBox.drawHitBox(g);
+        playerHitBox.drawHitBox(g);
     }
 }

@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MapManager {
-    BufferedImage mapImage;
-    ImageManager imageManager;
-    Game game;
-    List<HitBox> boardHitBoxList;
+    private BufferedImage mapImage;
+    private ImageManager imageManager;
+    private Game game;
+    private List<HitBox> boardHitBoxList;
     private final int ASSET_SIZE = 3;
     public MapManager(ImageManager imageManagers, String filePath, Game games) {
         imageManager = imageManagers;
@@ -95,7 +95,6 @@ public class MapManager {
         boardHitBoxList.add(new HitBox(200*ASSET_SIZE,20*ASSET_SIZE,4*ASSET_SIZE,24*ASSET_SIZE));
 
     }
-
     public void draw(Graphics g, int assetScale) {
         Graphics2D g2g = (Graphics2D) g;
         g2g.drawImage(mapImage,0,0, mapImage.getWidth()*assetScale,
@@ -104,4 +103,5 @@ public class MapManager {
             hitBox.drawHitBox(g);
         }
     }
+    public List<HitBox> getBoardHitBoxList(){return boardHitBoxList;}
 }

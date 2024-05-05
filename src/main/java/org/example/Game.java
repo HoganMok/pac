@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Game extends JPanel implements Runnable{
@@ -26,7 +27,8 @@ public class Game extends JPanel implements Runnable{
     private BoostFactory boostFactory;
     private Player player;
     private double CURRENT_DELTA_TIME;
-    private HitBox hitBox;
+    private CollisionDetection collisionDetection;
+    private List<HitBox> boardHitBoxList;
     Game(){
         this.setPreferredSize(new Dimension(500,500));
         this.setBackground(Color.black);
@@ -45,14 +47,18 @@ public class Game extends JPanel implements Runnable{
         inputManager = new InputManager();
         imageManager = new ImageManager();
         entityFactoryMap = new HashMap<>();
+        collisionDetection = new CollisionDetection();
+        mapManager = new MapManager(imageManager, "/gameboards/0-gameboard.png", this);
+        boardHitBoxList = mapManager.getBoardHitBoxList();
 //        entityFactoryMap.put(EntityFactory.factoryType.boostFactory, new BoostFactory(imageManager, this));
 //        entityFactoryMap.put(EntityFactory.factoryType.enemyFactory, new EnemyFactory(imageManager, 0,
 //                0, inputManager,this));
         entityFactoryMap.put(EntityFactory.factoryType.playerFactory, new PlayerFactory(PlayerFactory.PlayerType.yellow,
-                imageManager, 12, 12, inputManager, this));
+                imageManager, 104*3, 164*3, inputManager, this, collisionDetection,
+                boardHitBoxList));
 //        boostFactory = (BoostFactory) entityFactoryMap.get(EntityFactory.factoryType.boostFactory);
 //        boostFactory.createBoost(BoostFactory.boostType.egg, 200, 250);
-        mapManager = new MapManager(imageManager, "/gameboards/0-gameboard.png", this);
+
     }
     @Override
     public void run(){
