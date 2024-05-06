@@ -73,6 +73,11 @@ public class Player extends Entity {
                 }
             }
         }
+        movementOnBoard();
+        checkCollisionWithBoost();
+        playerHitBox.updateHixBox(PLAYER_X_COORDINATE, PLAYER_Y_COORDINATE);
+    }
+    private void movementOnBoard(){
         if (!collisionDetection.isCollided(boardHitBoxList, playerHitBox)) {
             if (!movementPrediction()) {
                 switch (movementState) {
@@ -91,7 +96,6 @@ public class Player extends Entity {
                 }
             }
         }
-        playerHitBox.updateHixBox(PLAYER_X_COORDINATE, PLAYER_Y_COORDINATE);
     }
     private boolean movementPrediction() {
         int x = PLAYER_X_COORDINATE;
@@ -112,6 +116,11 @@ public class Player extends Entity {
         }
         HitBox predictedHitBox = new HitBox(x,y,(int)(16*3),(int)(16*3));
         return collisionDetection.isCollided(boardHitBoxList, predictedHitBox);
+    }
+    private void checkCollisionWithBoost(){
+        if (collisionDetection.isCollided(game.getBoostFactory().getBoostHitBoxList(), playerHitBox)){
+            System.out.println("Is Collided");
+        }
     }
     private void updateTick(){
         ANI_TICK++;

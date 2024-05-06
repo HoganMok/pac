@@ -29,6 +29,7 @@ public class Game extends JPanel implements Runnable{
     private double CURRENT_DELTA_TIME;
     private CollisionDetection collisionDetection;
     private List<HitBox> boardHitBoxList;
+    private int GAME_SCORE;
     Game(){
         this.setPreferredSize(new Dimension(500,500));
         this.setBackground(Color.black);
@@ -50,14 +51,16 @@ public class Game extends JPanel implements Runnable{
         collisionDetection = new CollisionDetection();
         mapManager = new MapManager(imageManager, "/gameboards/0-gameboard.png", this);
         boardHitBoxList = mapManager.getBoardHitBoxList();
-//        entityFactoryMap.put(EntityFactory.factoryType.boostFactory, new BoostFactory(imageManager, this));
-//        entityFactoryMap.put(EntityFactory.factoryType.enemyFactory, new EnemyFactory(imageManager, 0,
-//                0, inputManager,this));
+        GAME_SCORE = 0;
         entityFactoryMap.put(EntityFactory.factoryType.playerFactory, new PlayerFactory(PlayerFactory.PlayerType.yellow,
                 imageManager, 104*3, 164*3, inputManager, this, collisionDetection,
                 boardHitBoxList));
-//        boostFactory = (BoostFactory) entityFactoryMap.get(EntityFactory.factoryType.boostFactory);
-//        boostFactory.createBoost(BoostFactory.boostType.egg, 200, 250);
+        entityFactoryMap.put(EntityFactory.factoryType.boostFactory, new BoostFactory(imageManager, this));
+//        entityFactoryMap.put(EntityFactory.factoryType.enemyFactory, new EnemyFactory(imageManager, 0,
+//                0, inputManager,this));
+
+        boostFactory = (BoostFactory) entityFactoryMap.get(EntityFactory.factoryType.boostFactory);
+        boostFactory.createBoost(BoostFactory.boostType.coin, 200, 250);
 
     }
     @Override
@@ -102,4 +105,7 @@ public class Game extends JPanel implements Runnable{
             entry.getValue().draw(g, CURRENT_DELTA_TIME, 3);
         }
     }
+    public BoostFactory getBoostFactory() {return boostFactory;}
+    public void modifyGameScore(int value) {GAME_SCORE += value;}
+
 }

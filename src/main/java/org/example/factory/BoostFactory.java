@@ -1,13 +1,16 @@
 package org.example.factory;
 
 import org.example.Game;
+import org.example.HitBox;
 import org.example.entity.Boost;
 import org.example.entity.Enemy;
 import org.example.manager.ImageManager;
 import org.example.manager.InputManager;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BoostFactory extends EntityFactory{
@@ -20,22 +23,22 @@ public class BoostFactory extends EntityFactory{
     private InputManager inputManager;
     private Game game;
     public Map<boostType, Boost> boostMap;
-
+    private List<HitBox> boostHitBoxList;
     public BoostFactory (ImageManager imageManagers, Game games){
         boostMap = new HashMap<>();
+        boostHitBoxList = new ArrayList<>();
         imageManager = imageManagers;
-         game = games;
+        game = games;
     }
-
     public void createBoost(boostType BoostType, int xCoordinate, int yCoordinate){
-        Boost boost = new Boost(BoostType, imageManager, xCoordinate, yCoordinate, game);
+        Boost boost = new Boost(BoostType, imageManager, xCoordinate, yCoordinate, game, boostHitBoxList);
         boostMap.put(BoostType, boost);
     }
-
     @Override
     public void update(double deltaTime){
         for (Map.Entry<BoostFactory.boostType, Boost> entry : boostMap.entrySet()) {
             entry.getValue().update(deltaTime);
+            if (entry.getValue().)
         }
     }
     @Override
@@ -44,4 +47,5 @@ public class BoostFactory extends EntityFactory{
             entry.getValue().draw(g, deltaTime, assetScale);
         }
     }
+    public List<HitBox> getBoostHitBoxList(){return boostHitBoxList;}
 }

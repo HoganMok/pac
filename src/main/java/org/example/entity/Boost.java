@@ -30,13 +30,15 @@ public class Boost extends Entity{
     private int ANI_INDEX = 0;
     private final static int ANI_SPEED = 10;
     public HitBox hitBox;
+    private List<HitBox> boostHitBoxList;
     public Boost(BoostFactory.boostType BoostTypes, ImageManager imageManagers, int xCoordinate, int yCoordinate, Game
-            games){
+            games, List<HitBox> hitBoxList){
         bufferedImages = new ArrayList<>();
         imageManager = imageManagers;
         BOOST_X_COORDINATE = xCoordinate;
         BOOST_Y_COORDINATE = yCoordinate;
         game = games;
+        boostHitBoxList = hitBoxList;
         animation = new HashMap<>();
         movementStates = movement.idle;
 
@@ -49,23 +51,58 @@ public class Boost extends Entity{
                     "/Sprites/snacks.png", 1, 1);
         };
 
-        BufferedImage bufferedImage = switch (BoostTypes) {
-            case coin, powerup, apple -> animatedSprite.getImagesList().get(0);
-            case banana -> animatedSprite.getImagesList().get(1);
-            case donut -> animatedSprite.getImagesList().get(2);
-            case burger -> animatedSprite.getImagesList().get(3);
-            case egg -> animatedSprite.getImagesList().get(4);
-            case corn -> animatedSprite.getImagesList().get(5);
-            case shoes -> animatedSprite.getImagesList().get(6);
-            case cake -> animatedSprite.getImagesList().get(7);
-            case peach -> animatedSprite.getImagesList().get(8);
-            case melon -> animatedSprite.getImagesList().get(9);
-            case tea -> animatedSprite.getImagesList().get(10);
-            case mushroom -> animatedSprite.getImagesList().get(11);
-            case bell -> animatedSprite.getImagesList().get(12);
-            case leaf -> animatedSprite.getImagesList().get(13);
-            case ice_cream -> animatedSprite.getImagesList().get(14);
-            case present -> animatedSprite.getImagesList().get(15);
+        BufferedImage bufferedImage = null;
+        switch (BoostTypes) {
+            case coin, powerup, apple -> {
+                bufferedImage = animatedSprite.getImagesList().get(0);
+                System.out.println("Created Hit BOx");
+                boostHitBoxList.add(new HitBox(BOOST_X_COORDINATE,BOOST_Y_COORDINATE,4*3,4*3));
+            }        
+            case banana -> {
+                bufferedImage = animatedSprite.getImagesList().get(1);
+            }
+            case donut -> {
+                bufferedImage = animatedSprite.getImagesList().get(2);
+            }
+            case burger -> {
+                bufferedImage = animatedSprite.getImagesList().get(3);
+            }
+            case egg -> {
+                bufferedImage = animatedSprite.getImagesList().get(4);
+            }
+            case corn -> {
+                bufferedImage = animatedSprite.getImagesList().get(5);
+            }
+            case shoes -> {
+                bufferedImage = animatedSprite.getImagesList().get(6);
+            }
+            case cake -> {
+                bufferedImage = animatedSprite.getImagesList().get(7);
+            }
+            case peach -> {
+                bufferedImage = animatedSprite.getImagesList().get(8);
+            }
+            case melon -> {
+                bufferedImage = animatedSprite.getImagesList().get(9);
+            }
+            case tea -> {
+                bufferedImage = animatedSprite.getImagesList().get(10);
+            }
+            case mushroom -> {
+                bufferedImage = animatedSprite.getImagesList().get(11);
+            }
+            case bell -> {
+                bufferedImage = animatedSprite.getImagesList().get(12);
+            }
+            case leaf -> {
+                bufferedImage = animatedSprite.getImagesList().get(13);
+            }
+            case ice_cream -> {
+                bufferedImage = animatedSprite.getImagesList().get(14);
+            }
+            case present -> {
+                bufferedImage = animatedSprite.getImagesList().get(15);
+            }
         };
         bufferedImages.add(bufferedImage);
         animation.put(movement.idle, bufferedImages);
@@ -94,5 +131,9 @@ public class Boost extends Entity{
                 BOOST_X_COORDINATE,BOOST_Y_COORDINATE,
                 animation.get(movementStates).get(ANI_INDEX).getWidth()*assetScale,
                 animation.get(movementStates).get(ANI_INDEX).getHeight()*assetScale,game);
+        for (HitBox hitbox: boostHitBoxList) {
+//            System.out.println("Drawing");
+            hitbox.getHitbox();
+        }
     }
 }
