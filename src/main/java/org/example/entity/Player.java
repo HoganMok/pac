@@ -30,8 +30,7 @@ public class Player extends Entity {
     private final static int ANI_SPEED = 10;
     private HitBox playerHitBox;
     private List<HitBox> boardHitBoxList;
-    private List<HitBox> playerhitBoxList;
-    CollisionDetection collisionDetection;
+    private CollisionDetection collisionDetection;
     public Player(ImageManager imageManagers, int xCoordinate, int yCoordinate, InputManager inputManagers, Game games,
                   CollisionDetection gameCollisionDetection, List<HitBox> gameBoardHitBoxList){
         inputManager = inputManagers;
@@ -39,7 +38,6 @@ public class Player extends Entity {
         game = games;
         collisionDetection = gameCollisionDetection;
         boardHitBoxList = gameBoardHitBoxList;
-        playerhitBoxList = new ArrayList<>();
 
         PLAYER_X_COORDINATE = xCoordinate;
         PLAYER_Y_COORDINATE = yCoordinate;
@@ -118,9 +116,9 @@ public class Player extends Entity {
         return collisionDetection.isCollided(boardHitBoxList, predictedHitBox);
     }
     private void checkCollisionWithBoost(){
-        if (collisionDetection.isCollided(game.getBoostFactory().getBoostHitBoxList(), playerHitBox)){
-            System.out.println("Is Collided");
-        }
+//        if (collisionDetection.isCollided(game.getBoostFactory().getBoostHitBoxList(), playerHitBox)){
+//            System.out.println("Is Collided");
+//        }
     }
     private void updateTick(){
         ANI_TICK++;
@@ -141,4 +139,5 @@ public class Player extends Entity {
                 animation.get(movementState).get(ANI_INDEX).getHeight()*assetScale, game);
         playerHitBox.drawHitBox(g);
     }
+    public HitBox getPlayerHitBox(){return playerHitBox;}
 }

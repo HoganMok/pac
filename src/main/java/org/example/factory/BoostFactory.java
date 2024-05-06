@@ -1,5 +1,6 @@
 package org.example.factory;
 
+import org.example.CollisionDetection;
 import org.example.Game;
 import org.example.HitBox;
 import org.example.entity.Boost;
@@ -23,28 +24,38 @@ public class BoostFactory extends EntityFactory{
     private InputManager inputManager;
     private Game game;
     public Map<boostType, Boost> boostMap;
+    private List<Boost> boostList;
     private List<HitBox> boostHitBoxList;
-    public BoostFactory (ImageManager imageManagers, Game games){
+    private CollisionDetection collisionDetection;
+    public BoostFactory (ImageManager imageManagers, Game games, CollisionDetection gameCollisionDetection){
         boostMap = new HashMap<>();
+        boostList = new ArrayList<>();
         boostHitBoxList = new ArrayList<>();
         imageManager = imageManagers;
         game = games;
+        collisionDetection = gameCollisionDetection;
     }
     public void createBoost(boostType BoostType, int xCoordinate, int yCoordinate){
         Boost boost = new Boost(BoostType, imageManager, xCoordinate, yCoordinate, game, boostHitBoxList);
+        boostList.add(boost);
         boostMap.put(BoostType, boost);
     }
     @Override
     public void update(double deltaTime){
-        for (Map.Entry<BoostFactory.boostType, Boost> entry : boostMap.entrySet()) {
-            entry.getValue().update(deltaTime);
-            if (entry.getValue().)
+        for (int i = 0; i < boostList.size(); i++){
+            if (collisionDetection.isCollidedWithBoost(game.getPlayerFactory().getPlayer().getPlayerHitBox(),
+                    boostHitBoxList.get(i))){
+                boostList.remove(i);
+                boostHitBoxList.remove(i);
+                game.modifyGameScore(100);
+                game.printGameScore();
+            }
         }
     }
     @Override
     public void draw(Graphics g, double deltaTime, int assetScale) {
-        for (Map.Entry<BoostFactory.boostType, Boost> entry : boostMap.entrySet()) {
-            entry.getValue().draw(g, deltaTime, assetScale);
+        for (Boost boost: boostList){
+            boost.draw(g, deltaTime, assetScale);
         }
     }
     public List<HitBox> getBoostHitBoxList(){return boostHitBoxList;}

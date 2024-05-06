@@ -24,12 +24,11 @@ public class PlayerFactory extends EntityFactory {
                     games, collisionDetection, boardHitBoxList);
         }
     }
-
     public void update (double deltaTime){
         player.update(deltaTime);
     }
-
     public void draw (Graphics g, double deltaTime, int assetScale){
         player.draw(g, deltaTime, assetScale);
     }
+    public Player getPlayer() {return player;}
 }

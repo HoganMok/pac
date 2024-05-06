@@ -9,4 +9,7 @@ public class CollisionDetection {
         }
         return  false;
     }
+    public boolean isCollidedWithBoost(HitBox playerHitBox, HitBox boostHitBox) {
+        return playerHitBox.getHitbox().intersects(boostHitBox.getHitbox());
+    }
 }

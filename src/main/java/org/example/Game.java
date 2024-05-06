@@ -55,12 +55,14 @@ public class Game extends JPanel implements Runnable{
         entityFactoryMap.put(EntityFactory.factoryType.playerFactory, new PlayerFactory(PlayerFactory.PlayerType.yellow,
                 imageManager, 104*3, 164*3, inputManager, this, collisionDetection,
                 boardHitBoxList));
-        entityFactoryMap.put(EntityFactory.factoryType.boostFactory, new BoostFactory(imageManager, this));
+        entityFactoryMap.put(EntityFactory.factoryType.boostFactory, new BoostFactory(imageManager, this,
+                collisionDetection));
 //        entityFactoryMap.put(EntityFactory.factoryType.enemyFactory, new EnemyFactory(imageManager, 0,
 //                0, inputManager,this));
 
         boostFactory = (BoostFactory) entityFactoryMap.get(EntityFactory.factoryType.boostFactory);
         boostFactory.createBoost(BoostFactory.boostType.coin, 200, 250);
+        boostFactory.createBoost(BoostFactory.boostType.coin, 200 ,260);
 
     }
     @Override
@@ -106,6 +108,10 @@ public class Game extends JPanel implements Runnable{
         }
     }
     public BoostFactory getBoostFactory() {return boostFactory;}
+    public PlayerFactory getPlayerFactory() {
+        return (PlayerFactory)entityFactoryMap.get(EntityFactory.factoryType.playerFactory);
+    }
     public void modifyGameScore(int value) {GAME_SCORE += value;}
+    public void printGameScore(){System.out.println(GAME_SCORE);}
 
 }
