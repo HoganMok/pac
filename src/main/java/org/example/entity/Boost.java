@@ -31,13 +31,15 @@ public class Boost extends Entity{
     private final static int ANI_SPEED = 10;
     public HitBox hitBox;
     private List<HitBox> boostHitBoxList;
+    private int ASSET_SCALE;
     public Boost(BoostFactory.boostType BoostTypes, ImageManager imageManagers, int xCoordinate, int yCoordinate, Game
-            games, List<HitBox> hitBoxList){
+            games, List<HitBox> hitBoxList, int gameAssetScale){
         bufferedImages = new ArrayList<>();
         imageManager = imageManagers;
         BOOST_X_COORDINATE = xCoordinate;
         BOOST_Y_COORDINATE = yCoordinate;
         game = games;
+        ASSET_SCALE = gameAssetScale;
         boostHitBoxList = hitBoxList;
         animation = new HashMap<>();
         movementStates = movement.idle;
@@ -55,8 +57,8 @@ public class Boost extends Entity{
         switch (BoostTypes) {
             case coin, powerup, apple -> {
                 bufferedImage = animatedSprite.getImagesList().get(0);
-                System.out.println("Created Hit BOx");
-                boostHitBoxList.add(new HitBox(BOOST_X_COORDINATE,BOOST_Y_COORDINATE,4*3,4*3));
+                boostHitBoxList.add(new HitBox(BOOST_X_COORDINATE+6*ASSET_SCALE,BOOST_Y_COORDINATE+6*ASSET_SCALE,
+                        4*ASSET_SCALE,4*ASSET_SCALE));
             }        
             case banana -> {
                 bufferedImage = animatedSprite.getImagesList().get(1);
@@ -132,8 +134,7 @@ public class Boost extends Entity{
                 animation.get(movementStates).get(ANI_INDEX).getWidth()*assetScale,
                 animation.get(movementStates).get(ANI_INDEX).getHeight()*assetScale,game);
         for (HitBox hitbox: boostHitBoxList) {
-//            System.out.println("Drawing");
-            hitbox.getHitbox();
+            hitbox.drawHitBox(g);
         }
     }
 }

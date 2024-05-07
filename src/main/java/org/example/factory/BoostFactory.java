@@ -27,16 +27,19 @@ public class BoostFactory extends EntityFactory{
     private List<Boost> boostList;
     private List<HitBox> boostHitBoxList;
     private CollisionDetection collisionDetection;
-    public BoostFactory (ImageManager imageManagers, Game games, CollisionDetection gameCollisionDetection){
+    private int ASSET_SCALE;
+    public BoostFactory (ImageManager imageManagers, Game games, CollisionDetection gameCollisionDetection,
+                         int gameAssetScale){
         boostMap = new HashMap<>();
         boostList = new ArrayList<>();
         boostHitBoxList = new ArrayList<>();
         imageManager = imageManagers;
         game = games;
         collisionDetection = gameCollisionDetection;
+        ASSET_SCALE = gameAssetScale;
     }
     public void createBoost(boostType BoostType, int xCoordinate, int yCoordinate){
-        Boost boost = new Boost(BoostType, imageManager, xCoordinate, yCoordinate, game, boostHitBoxList);
+        Boost boost = new Boost(BoostType, imageManager, xCoordinate, yCoordinate, game, boostHitBoxList, ASSET_SCALE);
         boostList.add(boost);
         boostMap.put(BoostType, boost);
     }

@@ -30,6 +30,7 @@ public class Game extends JPanel implements Runnable{
     private CollisionDetection collisionDetection;
     private List<HitBox> boardHitBoxList;
     private int GAME_SCORE;
+    private final int GAME_ASSET_SCALE = 3;
     Game(){
         this.setPreferredSize(new Dimension(500,500));
         this.setBackground(Color.black);
@@ -56,13 +57,13 @@ public class Game extends JPanel implements Runnable{
                 imageManager, 104*3, 164*3, inputManager, this, collisionDetection,
                 boardHitBoxList));
         entityFactoryMap.put(EntityFactory.factoryType.boostFactory, new BoostFactory(imageManager, this,
-                collisionDetection));
+                collisionDetection, GAME_ASSET_SCALE));
 //        entityFactoryMap.put(EntityFactory.factoryType.enemyFactory, new EnemyFactory(imageManager, 0,
 //                0, inputManager,this));
 
         boostFactory = (BoostFactory) entityFactoryMap.get(EntityFactory.factoryType.boostFactory);
         boostFactory.createBoost(BoostFactory.boostType.coin, 200, 250);
-        boostFactory.createBoost(BoostFactory.boostType.coin, 200 ,260);
+        //boostFactory.createBoost(BoostFactory.boostType.coin, 200 ,260);
 
     }
     @Override
