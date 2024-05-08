@@ -63,6 +63,7 @@ public class Game extends JPanel implements Runnable{
 
         boostFactory = (BoostFactory) entityFactoryMap.get(EntityFactory.factoryType.boostFactory);
         boostFactory.createBoost(BoostFactory.boostType.coin, 200, 250);
+//        boostFactory.createBoost(BoostFactory.boostType.coin, 200, 300);
         //boostFactory.createBoost(BoostFactory.boostType.coin, 200 ,260);
 
     }

@@ -46,18 +46,18 @@ public class Boost extends Entity{
 
         animatedSprite = switch (BoostTypes) {
             case coin -> new AnimatedSprite( imageManager, 1,
-                    "/Sprites/"+BoostTypes+".png", 1, 1);
+                    "/Sprites/"+BoostTypes+".png", 7, 7, 4,4);
             case powerup ->  new AnimatedSprite( imageManager, 2,
-                    "/Sprites/"+BoostTypes+".png", 1, 1);
+                    "/Sprites/"+BoostTypes+".png", 4, 4,11,11);
             default -> new AnimatedSprite( imageManager, 16,
-                    "/Sprites/snacks.png", 1, 1);
+                    "/Sprites/snacks.png", 1, 1,16,16);
         };
 
         BufferedImage bufferedImage = null;
         switch (BoostTypes) {
             case coin, powerup, apple -> {
                 bufferedImage = animatedSprite.getImagesList().get(0);
-                boostHitBoxList.add(new HitBox(BOOST_X_COORDINATE+6*ASSET_SCALE,BOOST_Y_COORDINATE+6*ASSET_SCALE,
+                boostHitBoxList.add(new HitBox(BOOST_X_COORDINATE,BOOST_Y_COORDINATE,
                         4*ASSET_SCALE,4*ASSET_SCALE));
             }        
             case banana -> {

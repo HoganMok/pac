@@ -28,6 +28,8 @@ public class Enemy extends Entity{
     private int ANI_TICK = 10;
     private int ANI_INDEX = 0;
     private final static int ANI_SPEED = 10;
+    private final static int IMAGE_WIDTH = 16;
+    private final static int IMAGE_HEIGHT = 16;
     private HitBox hitBox;
     public Enemy(EnemyFactory.EnemyType enemyType,ImageManager imageManagers, int xCoordinate, int yCoordinate, InputManager inputManagers, Game games) {
         inputManager = inputManagers;
@@ -38,16 +40,16 @@ public class Enemy extends Entity{
         ENEMY_Y_COORDINATE = yCoordinate;
 
         animatedSprite = new AnimatedSprite(imageManager, 8,
-                "/Sprites/"+enemyType+".png",1,1);
+                "/Sprites/"+enemyType+".png",1,1,IMAGE_WIDTH,IMAGE_HEIGHT);
         movementStates = movement.left;
         animation.put(movement.left,animatedSprite.getImagesSubList(0,2));
         animation.put(movement.right,animatedSprite.getImagesSubList(2,4));
         animation.put(movement.up,animatedSprite.getImagesSubList(4,6));
         animation.put(movement.down,animatedSprite.getImagesSubList(6,8));
         animation.put(movement.dead,new AnimatedSprite(imageManager, 4,
-                "/Sprites/enemy_eyes.png",1,1).getImagesList());
+                "/Sprites/enemy_eyes.png",1,1,IMAGE_WIDTH,IMAGE_HEIGHT).getImagesList());
         animation.put(movement.hunted,new AnimatedSprite(imageManager, 3,
-                "/Sprites/enemy_hunted.png",1,1).getImagesList());
+                "/Sprites/enemy_hunted.png",1,1,IMAGE_WIDTH,IMAGE_HEIGHT).getImagesList());
         hitBox = new HitBox(xCoordinate,yCoordinate,16*3,16*3);
     }
 

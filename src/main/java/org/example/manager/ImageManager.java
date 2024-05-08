@@ -17,6 +17,6 @@ public class ImageManager {
     }
 
     public BufferedImage getSubImage(BufferedImage image, int xCoordinate, int yCoordinate, int width, int height){
-        return image.getSubimage(xCoordinate, yCoordinate, 16, 16);
+        return image.getSubimage(xCoordinate, yCoordinate, width, height);
     }
 }

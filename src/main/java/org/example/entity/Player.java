@@ -31,6 +31,8 @@ public class Player extends Entity {
     private HitBox playerHitBox;
     private List<HitBox> boardHitBoxList;
     private CollisionDetection collisionDetection;
+    private final static int IMAGE_WIDTH = 16;
+    private final static int IMAGE_HEIGHT = 16;
     public Player(ImageManager imageManagers, int xCoordinate, int yCoordinate, InputManager inputManagers, Game games,
                   CollisionDetection gameCollisionDetection, List<HitBox> gameBoardHitBoxList){
         inputManager = inputManagers;
@@ -45,7 +47,7 @@ public class Player extends Entity {
         animation = new HashMap<>();
 
         animatedSprite = new AnimatedSprite(imageManager, 12, "/Sprites/lil_pac.png",
-                1, 1);
+                1, 1,IMAGE_WIDTH,IMAGE_HEIGHT);
 
         animation.put(movement.idle, animatedSprite.getImagesSubList(0,1));
         animation.put(movement.left, animatedSprite.getImagesSubList(0,3));
@@ -54,7 +56,7 @@ public class Player extends Entity {
         animation.put(movement.down, animatedSprite.getImagesSubList(9,12));
 
         animation.put(movement.dead,(new AnimatedSprite( imageManager, 11,
-                "/Sprites/dead_pac.png", 1,1)).getImagesList());
+                "/Sprites/dead_pac.png", 1,1,IMAGE_WIDTH,IMAGE_HEIGHT)).getImagesList());
         movementState=movement.idle;
         playerHitBox = new HitBox(xCoordinate+6,yCoordinate+6,(int)(16*3),(int)(16*3));
     }
