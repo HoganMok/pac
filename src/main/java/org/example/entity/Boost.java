@@ -133,8 +133,8 @@ public class Boost extends Entity{
                 BOOST_X_COORDINATE,BOOST_Y_COORDINATE,
                 animation.get(movementStates).get(ANI_INDEX).getWidth()*assetScale,
                 animation.get(movementStates).get(ANI_INDEX).getHeight()*assetScale,game);
-        for (HitBox hitbox: boostHitBoxList) {
-            hitbox.drawHitBox(g);
-        }
+//        for (HitBox hitbox: boostHitBoxList) {
+//            hitbox.drawHitBox(g);
+//        }
     }
 }

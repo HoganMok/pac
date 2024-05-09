@@ -60,15 +60,9 @@ public class Game extends JPanel implements Runnable{
                 collisionDetection, GAME_ASSET_SCALE));
 //        entityFactoryMap.put(EntityFactory.factoryType.enemyFactory, new EnemyFactory(imageManager, 0,
 //                0, inputManager,this));
-
-        boostFactory = (BoostFactory) entityFactoryMap.get(EntityFactory.factoryType.boostFactory);
-        for (int i = 12; i < 216; i+=14) {
-            boostFactory.createBoost(BoostFactory.boostType.coin, i*3, 12*3);
-        }
-
 //        boostFactory.createBoost(BoostFactory.boostType.coin, 200, 300);
         //boostFactory.createBoost(BoostFactory.boostType.coin, 200 ,260);
-
+        mapManager.mapSetUp();
     }
     @Override
     public void run(){
@@ -95,6 +89,9 @@ public class Game extends JPanel implements Runnable{
             }
         }
     }
+    public void endGame() {
+        isRunning = false;
+    }
     private void update() {
         for (Map.Entry<EntityFactory.factoryType, EntityFactory<?>> entry : entityFactoryMap.entrySet()) {
             if (entry != null) {
@@ -112,7 +109,7 @@ public class Game extends JPanel implements Runnable{
             entry.getValue().draw(g, CURRENT_DELTA_TIME, 3);
         }
     }
-    public BoostFactory getBoostFactory() {return boostFactory;}
+    public BoostFactory getBoostFactory() {return (BoostFactory) entityFactoryMap.get(EntityFactory.factoryType.boostFactory);}
     public PlayerFactory getPlayerFactory() {
         return (PlayerFactory)entityFactoryMap.get(EntityFactory.factoryType.playerFactory);
     }

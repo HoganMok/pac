@@ -54,6 +54,9 @@ public class BoostFactory extends EntityFactory{
                 game.printGameScore();
             }
         }
+        if (boostList.size() == 0) {
+            game.endGame();
+        }
     }
     @Override
     public void draw(Graphics g, double deltaTime, int assetScale) {
