@@ -93,8 +93,12 @@ public class MapManager {
 
         boardHitBoxList.add(new HitBox(180*ASSET_SIZE,20*ASSET_SIZE,4*ASSET_SIZE,24*ASSET_SIZE));
         boardHitBoxList.add(new HitBox(200*ASSET_SIZE,20*ASSET_SIZE,4*ASSET_SIZE,24*ASSET_SIZE));
+    }
+
+    private void initialCoinsSetUp(){
 
     }
+
     public void draw(Graphics g, int assetScale) {
         Graphics2D g2g = (Graphics2D) g;
         g2g.drawImage(mapImage,0,0, mapImage.getWidth()*assetScale,
